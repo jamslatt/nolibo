@@ -1,33 +1,38 @@
-// Login Logic
-Template.login.events({
-    'submit form': function(event){
-        event.preventDefault();
-        var email = $('[name=email]').val()
-            , password = $('[name=password]').val();
-        Meteor.loginWithPassword(email, password);
-        Router.go('/me');
-    }
+/*Template.signOut.onRendered(function() {
+  $('#primaryCAC').focus();
+
+jQuery.extend(jQuery.expr[':'], {
+focusable: function (el, index, selector) {
+    return $(el).is('a, button, :input, [tabindex]');
+}
 });
 
-// Register Logic
-Template.register.events({
-  'submit form' : function() {
-    event.preventDefault();
-    var email = $('[name=email]').val()
-      , ign = $('[name=IGN]').val()
-      , password = $('[name=password]').val();
+$(document).on('keypress', 'input,select', function (e) {
+
+if (e.which == 13) {
+    e.preventDefault();
+    // Get all focusable elements on the page
+    var $canfocus = $(':focusable');
+    var index = $canfocus.index(document.activeElement) + 1;
+    if (index >= $canfocus.length) index = 0;
+    $canfocus.eq(index).delay(1000).focus();
+}
+});
 
 
-      // add logic
+$("#location").keypress(function(event) {
+if (event.which == 13) {
+  $('#submit').click();
+}
+});
+})
+*/
+Template.signOut.onRendered(function() {
+  $(document).on('keypress', function (e) {
 
-    Accounts.createUser({email: email, password : password, ign : ign}, function(err){
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("Logged in.");
-          location.replace("/me");
-        }
-
-      });
+  if (e.which == 13) {
+      event.preventDefault();
   }
-});
+
+})
+})

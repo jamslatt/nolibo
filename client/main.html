@@ -1,16 +1,26 @@
 <template name="base">
     <head>
-        <title>MC Applications</title>
-        <link rel='/favicon.ico' type='image/x-icon' href='favicon.ico' />
-        <link rel="stylesheet" href="/glyph/glyphicons.css" />
-        <link rel="stylesheet" href="/theme.css" />
+        <title>No Libo!</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+        <style>
+        body{
+          overflow-x:hidden;
+          background: url('/bg.jpg');
+          background-size: cover;
+
+        }
+
+          </style>
     </head>
     <body>
-        <div class="top_bar"></div>
-        {{> nav}}
+
           {{> yield}}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="main.min.js"></script>
+        <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
     </body>
 
 </template>

@@ -1,72 +1,305 @@
 <template name="home">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h3>Welcome to DH Staff Application Center</h3>
-                    <p>Reminder please visit our staff application guidelines and read them carefully before applying for a position within the network. Thank you for you interest in the network and we hope to work with you soon!</p>
-                    <p>Please do not inquire about the status of your application, doing so will result in an immediate rejection.</p>
-                </div>
+  <div class="row">
+    <div class="container" style="margin-top: 10vh;">
+      <div class="col-md-12 ">
+        <div class="jumbotron">
+          <h1 class="display-4">¡No Libo!</h1>
+          <p class="subtitle">Before this... you had no libo. You had no libo because you waited in line for Gumpy to write his buddys name in a notebook. Say goodbye to writing and drawing lines in a green book. The only downside to this is we save
+            trees.</p>
+          <hr class="my-4">
+          <div class="row">
+            <div class="col-md-6">
+              <a href="/out" style="width: 100%;height: 175px;" class="btn btn-lg btn-primary"><br /><i class="fas fa-sign-out-alt"></i><br />Sign Out<br /><i>leaving alpha co</i></a>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h4>Before you apply</h4>
-                    <p>Before you apply for any position within the network, please ensure you read and agree to the <a href="https://wiki.digitalhazards.net/books/network-policy" target="_blank" title="Network Policy">Network Policy</a>.</p>
-                    <p>Be sure you have no prior infractions aswell.</p>
-                </div>
+            <div class="col-md-6">
+              <a href="/in" style="width: 100%;height: 175px;vertical-align: bottom;" class="btn btn-lg btn-outline-primary"><br /><i class="fas fa-sign-in-alt"></i><br />Sign In<br /><i>coming back from trip</i></a>
             </div>
+          </div>
         </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="panel panel-info">
-                    <div class="panel-heading">Don't see your application?</div>
-                    <div class="panel-body">
-                        <p>You need to fill out all the required fields or the application will not submit. Validation errors will come in a future update.</p>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">Server Managers</div>
-                    <div class="panel-body">
-                        <div class="media">
-                            <div class="media-left"> 
-                                    <img class="media-object" src="https://crafatar.com/avatars/ABD655A324E14B7F9B758D5329E87E4F?overlay&size=64" alt="Fonix MC Head">
-                            </div>
-                            <div class="media-body">
-                                <h4 class="media-heading">Network Owner</h4>
-                                _Fonix will be the one to overview and accept or reject all Network Wide staff positions.
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-left">
-                                <img class="media-object" src="https://crafatar.com/avatars/0e0ed5be495940359d46e04f0c61834c/?size=64" alt="Ace MC Head">
-                            </div>
-                            <div class="media-body">
-                                <h4 class="media-heading">Crafting Magic & Magic Revolution Manager</h4>
-                                Ace will be the one to overview all Crafting Magic Applications aswell as Magic Revolution Applications.
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-left">
-                                <img class="media-object" src="https://crafatar.com/avatars/12394ead9ac34086a5ab32285fafee5c/?size=64" alt="Zowner MC Head">
-                            </div>
-                            <div class="media-body">
-                                <h4 class="media-heading">Medival Times Manager</h4>
-                               Zowner will be the one to overview all Medival Times Applications.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="alert alert-warning" role="alert">Report all bugs to i3itCoin on discord or submit an issue on the <a href="https://github.com/digitalhazards/Application-System" target="_blank" title="Github Repo">GitHub Repository</a>. This is a beta application.</div>
-            </div>
-            <div class="col-md-4">
-                <h4>Need Help?</h4>
-                <iframe src="https://discordapp.com/widget?id=146004974793392130&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0"></iframe>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
+  <div class="row">
+    <div class="container" style="margin-top: 10vh;">
+      <div class="col-md-12 ">
+        <a href="/sdo" style="float:right;" class="btn btn-lg btn-outline-danger">SDO</a>
+      </div>
+    </div>
+  </div>
+</template>
+<template name="signIn">
+  <div class="container" style="margin-top: 10vh">
+    <div class="row">
+      <div class="col-md-12 ">
+        <div class="jumbotron">
+          <h1 class="display-4">Scan your CAC Card...</h1>
+          <a href="/" title="Home" class="btn btn-outline-primary">Home</a>
+          <a href="/out" title="Sign In" class="btn btn-outline-primary">Sign Out</a>
+          <hr class="my-4">
+          <form>
+            <div class="form-group">
+              <input type="text" class="form-control" id="cac" placeholder="CAC RAW Data">
+            </div>
+          </form>
+          <script>
+            $("#cac").keypress(function(event) {
+            if (event.which == 13) {
+                event.preventDefault();
+                name = $('#cac').delay(2000).val().substring(35,50);
+                location.replace("/n/"+ name);
 
+            }
+          });
+
+
+          </script>
+        </div>
+      </div>
+    </div>
+    <script>
+      $('#cac').focus();
+    </script>
+  </div>
+
+</template>
+<template name="signOut">
+  <div class="container" style="margin-top: 10vh">
+    <div class="row">
+      <div class="col-md-12 ">
+        <div class="jumbotron">
+          <h1 class="display-4">Sign Out</h1>
+          <a href="/" title="Home" class="btn btn-outline-primary">Home</a>
+          <a href="/in" title="Sign In" class="btn btn-outline-primary">Sign In</a>
+
+          <hr class="my-4">
+            <div class="form-group">
+              <label for="primaryCAC">CAC #1</label>
+              <input type="text" name="primaryCAC" class="form-control" id="primaryCAC" aria-describedby="pCAChelp" placeholder="Scan your CAC Card...">
+              <small id="pCAChelp" class="form-text text-muted">Scan the barcode just below your picture on your Military ID (CAC).</small>
+            </div>
+            <div class="form-group">
+              <label for="secondaryCAC">CAC #2</label>
+              <input type="text" name="secondaryCAC" class="form-control" id="secondaryCAC" aria-describedby="sCAChelp" placeholder="Scan your CAC Card...">
+              <small id="sCAChelp" class="form-text text-muted">Scan the barcode just below your picture on your Military ID (CAC).</small>
+            </div>
+            <div class="form-group">
+              <label for="secondaryCAC">Destination</label>
+              <input type="text" name="destination" class="form-control" id="location" aria-describedby="loc" placeholder="Scan your destination...">
+              <small id="loc" class="form-text text-muted">Scan the barcode that matches the location you are traveling to.</small>
+            </div>
+
+            <br/>
+            <button class="btn btn-lg signIn btn-primary" width="100%">Sign In</button>
+
+        </div>
+      </div>
+    </div>
+    <script>
+      $('#primaryCAC').focus();
+      /*$(":input").keypress(function(event){
+    if (event.which == '10' || event.which == '13') {
+        event.preventDefault();
+    }
+    });*/
+    jQuery.extend(jQuery.expr[':'], {
+    focusable: function (el, index, selector) {
+        return $(el).is('a, button, :input, [tabindex]');
+    }
+    });
+
+    $(document).on('keypress', 'input,select', function (e) {
+
+    if (e.which == 13) {
+        e.preventDefault();
+        // Get all focusable elements on the page
+        var $canfocus = $(':focusable');
+        var index = $canfocus.index(document.activeElement) + 1;
+        if (index >= $canfocus.length) index = 0;
+        $canfocus.eq(index).delay(1000).focus();
+    }
+    });
+
+
+    $("#location").keypress(function(event) {
+    if (event.which == 13) {
+      $('form').submit();
+  }
+});
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+  </div>
+</template>
+<template name="byname">
+  <div class="container" style="margin-top: 10vh">
+    <div class="row">
+      <div class="col-md-12 ">
+        <div class="jumbotron">
+          <a href="/" title="Home" class="btn btn-outline-primary">Home</a>
+          <a href="/in" title="Sign In" class="btn btn-outline-primary">Sign In</a>
+          <a href="/out" title="Sign Out" class="btn btn-outline-primary">Sign Out</a>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Buddy</th>
+                <th scope="col">Location</th>
+                <th scope="col">Time Out</th>
+                <th scope="col">Sign In</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each primary}}
+                <tr>
+                  <td>{{firstName}}</td>
+                  <td>{{secondName}}</td>
+                  <td>{{destination}}</td>
+                  <td>{{signOut}}</td>
+                  <td><button id="signIn" class="btn btn-sm btn-warning">Sign in</button></td>
+                </tr>
+              {{/each}}
+              {{#each secondary}}
+                <tr>
+                  <td>{{firstName}}</td>
+                  <td>{{secondName}}</td>
+                  <td>{{destination}}</td>
+                  <td>{{signOut}}</td>
+                  <td><button id="signIn" class="btn btn-sm btn-warning">Sign in</button></td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<template name="sdo">
+
+  <div class="container-fluid" style="margin-top: 10vh">
+    <div class="row">
+      <div class="col-md-8 offset-md-2 jumbotron">
+        <h1 class="display-4">SDO Dashboard</h1>
+        <div class="row">
+          <div class="col-md-6">
+            <a href="/" title="Home" class="btn btn-outline-primary">Home</a>
+            <a href="/in" title="Sign In" class="btn btn-outline-primary">Sign In</a>
+            <a href="/out" title="Sign Out" class="btn btn-outline-primary">Sign Out</a>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">History</span>
+              </div>
+              <input type="text" class="form-control" id="history" placeholder="Enter Day to View Records YYYYMMDD" required>
+            </div>
+          </div>
+        </div>
+        <script>
+        $("#history").keypress(function(event) {
+        if (event.which == 13) {
+            event.preventDefault();
+            name = $('#history').val();
+            location.replace("/d/"+ name);
+
+        }
+      });
+        </script>
+
+
+        <div class="alert alert-light" style="margin-top: 25px" role="alert">
+          Hit <em>Ctrl+F</em> to search for a name or location!
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Buddy</th>
+              <th scope="col">Location</th>
+              <th scope="col">Time Out</th>
+              <th scope="col">Sign In</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each primaryDB}}
+              <tr>
+                <td>{{firstName}}</td>
+                <td>{{secondName}}</td>
+                <td>{{destination}}</td>
+                <td>{{signOut}}</td>
+                <td>{{#if signIn}}{{signIn}}{{else}}
+                    <div class="alert alert-danger" role="alert">FAILED TO SIGN IN</div>
+                  {{/if}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="sdoHistory">
+
+  <div class="container-fluid" style="margin-top: 10vh">
+    <div class="row">
+      <div class="col-md-8 offset-md-2 jumbotron">
+        <h1 class="display-4">SDO Dashboard</h1>
+        <div class="row">
+          <div class="col-md-6">
+            <a href="/" title="Home" class="btn btn-outline-primary">Home</a>
+            <a href="/in" title="Sign In" class="btn btn-outline-primary">Sign In</a>
+            <a href="/out" title="Sign Out" class="btn btn-outline-primary">Sign Out</a>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">History</span>
+              </div>
+              <input type="text" class="form-control" id="history" placeholder="Enter Day to View Records YYYYMMDD" required>
+            </div>
+          </div>
+        </div>
+        <script>
+        $("#history").keypress(function(event) {
+        if (event.which == 13) {
+            event.preventDefault();
+            name = $('#history').val();
+            location.replace("/d/"+ name);
+
+        }
+      });
+        </script>
+
+
+        <div class="alert alert-light" style="margin-top: 25px" role="alert">
+          Hit <em>Ctrl+F</em> to search for a name or location!
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Buddy</th>
+              <th scope="col">Location</th>
+              <th scope="col">Time Out</th>
+              <th scope="col">Sign In</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each primaryDB}}
+              <tr>
+                <td>{{firstName}}</td>
+                <td>{{secondName}}</td>
+                <td>{{destination}}</td>
+                <td>{{signOut}}</td>
+                <td>{{#if signIn}}{{signIn}}{{else}}
+                    <div class="alert alert-danger" role="alert">FAILED TO SIGN IN</div>
+                  {{/if}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </template>

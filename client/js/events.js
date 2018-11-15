@@ -1,124 +1,39 @@
-Template.NetworkApplication.events({
-  'submit form': function (e, t) {
-    Router.go('/me/applications');
-  }
-})
-Template.CMModApp.events({
-  'submit form': function (e, t) {
-    Router.go('/me/applications');
-  }
-})
-Template.MTApp.events({
-  'submit form': function (e, t) {
-    Router.go('/me/applications');
-  }
-})
-
-Template.MRApp.events({
-  'submit form': function (e, t) {
-    Router.go('/me/applications');
-  }
-})
-
-Template.admin.events({
-    'click .clearLogs': function () {
-        Meteor.call('logs.clearlog', {
-            collection: "logs"
-        })
-    }
-})
+Meteor.subscribe('primaryDB');
 
 
-Template.app_detail.events({
-  'click .accept': function (doc) {
-    console.log("Accept");
-      NetworkApp.update(this._id, {$set:{
-        status: "Accepted"
+Template.signOut.events({
+  'click .signIn' : function (event) {
+    event.preventDefault();
+
+    let pCAC = $('[name="primaryCAC"]').val();
+    let sCAC = $('[name="secondaryCAC"]').val();
+    let dest = $('[name="destination"]').val();
+
+
+
+
+    primaryDB.insert({
+            primaryCAC: pCAC,
+            secondaryCAC: sCAC,
+            firstName: pCAC.substring(35,50),
+            secondName: sCAC.substring(35,50),
+            destination: dest,
+            signOut: new Date(),
+            sdoDate: moment().format("YYYYMMDD")
+        });
+
+        $('[name="primaryCAC"]').val(null);
+        $('[name="secondaryCAC"]').val(null);
+        $('[name="destination"]').val(null);
+        document.getElementById("form").reset();
+  }
+
+})
+
+Template.byname.events({
+  'click #signIn': function(doc) {
+    primaryDB.update(this._id, {$set:{
+        signIn: new Date()
       }});
-      logs.insert({
-          "text": Meteor.user().profile.ign + " just accepted " + this.ign + "'s Network application.",
-      })
-  },
-  'click .reject': function (e, t) {
-    console.log("Reject");
-    NetworkApp.update(this._id, {$set:{
-      status: "Rejected"
-    }});
-    logs.insert({
-        "text": Meteor.user().profile.ign + " just rejected " + this.ign + "'s Network application.",
-    })
-  }
-})
-
-Template.cm_app_detail.events({
-  'click .accept': function (doc) {
-    console.log("Accept");
-      CMApp.update(this._id, {$set:{
-        status: "Accepted"
-      }});
-      logs.insert({
-          "text": Meteor.user().profile.ign + " just accepted " + this.ign + "'s Crafting Magic application.",
-      })
-  },
-  'click .reject': function (e, t) {
-    console.log("Reject");
-    CMApp.update(this._id, {$set:{
-      status: "Rejected"
-    }});
-    logs.insert({
-        "text": Meteor.user().profile.ign + " just rejected " + this.ign + "'s Crafting Magic application.",
-    })
-  }
-})
-
-Template.mr_app_detail.events({
-  'click .accept': function (doc) {
-    console.log("Accept");
-      MRApp.update(this._id, {$set:{
-        status: "Accepted"
-      }});
-      logs.insert({
-          "text": Meteor.user().profile.ign + " just accepted " + this.ign + "'s Magic Revolution application.",
-      })
-  },
-  'click .reject': function (e, t) {
-    console.log("Reject");
-    MRApp.update(this._id, {$set:{
-      status: "Rejected"
-    }});
-    logs.insert({
-        "text": Meteor.user().profile.ign + " just rejected " + this.ign + "'s Magic Revolution application.",
-    })
-  }
-})
-
-Template.mt_app_detail.events({
-  'click .accept': function (doc) {
-    console.log("Accept");
-      MTApp.update(this._id, {$set:{
-        status: "Accepted"
-      }});
-      logs.insert({
-          "text": Meteor.user().profile.ign + " just accepted " + this.ign + "'s Medieval Times application.",
-      })
-  },
-  'click .reject': function (e, t) {
-    console.log("Reject");
-    MTApp.update(this._id, {$set:{
-      status: "Rejected"
-    }});
-    logs.insert({
-        "text": Meteor.user().profile.ign + " just rejected " + this.ign + "'s Medieval Times application.",
-    })
-  }
-})
-
-Template.search.events({
-  'submit form': function (e, t) {
-    var query = $('#search').val();
-    NetworkApp.find({ign: query});
-    
-
-    return false;
   }
 })

@@ -1,120 +1,23 @@
-// Returns logged in members IGN
-
-Template.me.helpers({
-    ign: function() {
-        return Meteor.user().profile.ign;
+Template.byname.helpers({
+    primary: ()=> {
+        name = Iron.Location.get().path.substring(3,22);
+        return primaryDB.find({ firstName: name, signIn: null, sdoDate: moment().format("YYYYMMDD") });
+    },
+    secondary: ()=> {
+        name = Iron.Location.get().path.substring(3,22);
+        return primaryDB.find({ secondName: name, signIn: null, sdoDate: moment().format("YYYYMMDD") });
+    },
+});
+Template.sdo.helpers({
+    primaryDB: ()=> {
+        return primaryDB.find({sdoDate: moment().format("YYYYMMDD")});
     }
+
 });
 
-Template.nav.helpers({
-    ign: function() {
-        return Meteor.user().profile.ign;
-    },
-    isManagerUser: function() {
-        return Roles.userIsInRole(Meteor.user(), ['admin']);
-    },
-    isSuperAdmin: function () {
-        return Roles.userIsInRole(Meteor.user(), ['superadmin']);
-    }
-});
-
-
-Template.superadmin.helpers({
-    isSuperAdmin: function () {
-        return Roles.userIsInRole(Meteor.user(), ['superadmin']);
-    }
-});
-
-// Log out user
-Template.nav.events({
-    'click .logout': function(event){
-        event.preventDefault();
-        Meteor.logout();
-    }
-});
-
-// Show all applications that user submitted from NetworkApp collection
-Template.myapps.helpers({
-    NetworkApps: ()=> {
-        return NetworkApp.find({applicant: Meteor.userId()});
-    },
-    CMApps: ()=> {
-      return CMApp.find({applicant: Meteor.userId()});
-    },
-    MTApps: ()=> {
-      return MTApp.find({applicant: Meteor.userId()});
-    },
-    MRApps: ()=> {
-      return MRApp.find({applicant: Meteor.userId()});
-    }
-});
-
-Template.admin.helpers({
-    AllNetworkApps: ()=> {
-        return NetworkApp.find({});
-    },
-    isSuperAdmin: function () {
-        return Roles.userIsInRole(Meteor.user(), ['superadmin']);
-    },
-    logs: () => {
-        return logs.find({});
-    },
-    AllPendingNetworkApps: ()=> {
-      return NetworkApp.find({status: "Pending"});
-    },
-    AllCMApps: ()=> {
-      return CMApp.find({});
-    },
-    AllPendingCMApps: ()=> {
-      return CMApp.find({status: "Pending"});
-    },
-    AllMTApps: ()=> {
-      return MTApp.find({});
-    },
-    AllPendingMTApps: ()=> {
-      return MTApp.find({status: "Pending"});
-    },
-    AllMRApps: ()=> {
-      return MRApp.find({});
-    },
-    AllPendingMRApps: ()=> {
-      return MRApp.find({status: "Pending"});
-    },
-    // check if user is an admin
-    isAdminUser: function() {
-        return Roles.userIsInRole(Meteor.user(), ['admin']);
-    },
-    isSuperAdmin: function() {
-      return Roles.userIsInRole(Meteor.user(), ['superadmin']);
-    }
-});
-
-Template.byIGN.helpers({
-    isAdminUser: function () {
-        return Roles.userIsInRole(Meteor.user(), ['admin']);
-    },
-});
-
-Template.app_detail.helpers({
-    isAdminUser: function() {
-        return Roles.userIsInRole(Meteor.user(), ['admin']);
-    }
-});
-
-Template.cm_app_detail.helpers({
-    isAdminUser: function() {
-        return Roles.userIsInRole(Meteor.user(), ['admin']);
-    }
-});
-
-Template.mt_app_detail.helpers({
-    isAdminUser: function() {
-        return Roles.userIsInRole(Meteor.user(), ['admin']);
-    }
-});
-Template.mr_app_detail.helpers({
-    isAdminUser: function() {
-        return Roles.userIsInRole(Meteor.user(), ['admin']);
-    }
-});
-
+Template.sdoHistory.helpers({
+  primaryDB: ()=> {
+      date = Iron.Location.get().path.substring(3,22);
+      return   primaryDB.find({ sdoDate: date });
+  }
+})
