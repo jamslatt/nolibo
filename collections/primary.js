@@ -22,11 +22,19 @@ primaryDBmap = new SimpleSchema({
   secondaryCAC: {
     type: String,
   },
+  thirdCAC: {
+    type: String,
+    optional: true
+  },
   firstName: {
     type: String,
   },
   secondName: {
     type: String,
+  },
+  thirdName: {
+    type: String,
+    optional: true
   },
   destination: {
     type: String,
@@ -40,6 +48,22 @@ primaryDBmap = new SimpleSchema({
   },
   sdoDate: {
     type: String,
+  },
+  phoneOne: {
+    type: String,
+    optional: true
+  },
+  phoneTwo: {
+    type: String,
+    optional: true
+  },
+  phoneThree: {
+    type: String,
+    optional: true
+  },
+  totalOut: {
+    type: Number,
+    optional: true
   }
 });
 
