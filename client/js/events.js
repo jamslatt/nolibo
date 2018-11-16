@@ -1,5 +1,17 @@
 Meteor.subscribe('primaryDB');
 
+Template.base.events({
+  'click .download': function(event) {
+  var nameFile = 'LibertyLog.csv';
+  var date = window.prompt('Enter the date for the records you want to download.', moment().format("YYYYMMDD"))
+  Meteor.call('download', date, function(err, fileContent) {
+    if(fileContent){
+      var blob = new Blob([fileContent], {type: "text/plain;charset=utf-8"});
+      saveAs(blob, nameFile);
+    }
+  });
+}
+})
 
 Template.signOut.events({
   'click .signIn': function(event) {

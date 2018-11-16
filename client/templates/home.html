@@ -2,7 +2,6 @@
   <div class="row">
     <div class="container" style="margin-top: 10vh;">
       <div class="col-md-12 ">
-
         <div class="jumbotron">
           <h1 class="display-4">¡No Libo!</h1>
           <p class="subtitle">Before this... you had no libo. You had no libo because you waited in line for Gumpy to write his buddys name in a notebook. Say goodbye to writing and drawing lines in a green book. The only downside to this is we save
@@ -28,23 +27,16 @@
             </div>
           </div>
         </div>
+        {{#if loggedin}}
+          <div class="alert alert-success" role="alert">Connected</div>
+        {{else}}
+          <div class="alert alert-danger" role="alert">Disconnected. <a href="/login" class="alert-link">Login</a></div>
+        {{/if}}
+
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="container" style="margin-top: 10vh;">
-      <div class="col-md-2 offset-md-8  ">
-        <ul class="nav nav-pills">
-          <li class="nav-item">
-            <a href="/sdo" class="btn nav-link btn-lg btn-outline-danger">SDO <i class="fas fa-tachometer-alt"></i></a>
-          </li>
-          <li class="nav-item">
-            <a href="/intake" class="btn nav-link btn-lg btn-outline-danger">Intake <i class="fas fa-file-signature"></i></a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+
 </template>
 <template name="signIn">
   <div class="container" style="margin-top: 10vh">
@@ -114,15 +106,20 @@
             <small id="loc" class="form-text text-muted">Scan the barcode that matches the location you are traveling to.</small>
           </div>
 
-          <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Small Px</button>
-          <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Chow Hall</button>
-          <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Main Px</button>
-          <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Bravo Troop Store</button>
-          <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Performance Strength Center</button>
-          <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">McLaughlin Gym</button>
-          <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Buffalo Wild Wings</button>
-          <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Tilted Kilt</button>South Park Mall
-
+          <div class="row center locat">
+            <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Small Px</button>&nbsp;
+            <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Chow Hall</button>
+            <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Main Px</button>
+            <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Bravo Troop Store</button>
+            <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Performance Strength Center</button>
+          </div>
+          <div class="row" style="margin-top: 10px">
+            <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">McLaughlin Gym</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Buffalo Wild Wings</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Tilted Kilt</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">South Park Mall</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-secondary" data-toggle="button" aria-pressed="false" autocomplete="off">Other</button>
+          </div>
 
 
           <br />
@@ -332,49 +329,49 @@
           </div>
 
 
-<!-- Modal -->
-<div class="modal fade" id="noSign" tabindex="-1" role="dialog" aria-labelledby="noSignLabel" aria-hidden="true">
-  <div class="modal-dialog" style="max-width: 1100px" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="noSignLabel">Failed to Sign In</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Names</th>
-              <th scope="col">Location</th>
-              <th scope="col">Phone</th>
-              <th scope="col">Time Out</th>
-              <th scope="col">Sign In</th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each noSign}}
-              <tr>
-                <td>{{firstName}} / {{secondName}}{{#if thirdName}} / {{thirdName}}{{/if}}</td>
-                <td><span class="changeLoc" style="cursor: pointer">{{destination}}</span></td>
-                <td>{{phoneOne}}<br/>{{phoneTwo}}<br/>{{phoneThree}}</td>
-                <td>{{signOut}}</td>
-                <td>{{#if signIn}}{{signIn}}{{else}}
-                    <div class="alert alert-danger" role="alert">FAILED TO SIGN IN</div>
-                  {{/if}}</td>
-              </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+          <!-- Modal -->
+          <div class="modal fade" id="noSign" tabindex="-1" role="dialog" aria-labelledby="noSignLabel" aria-hidden="true">
+            <div class="modal-dialog" style="max-width: 1100px" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="noSignLabel">Failed to Sign In</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Names</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Time Out</th>
+                        <th scope="col">Sign In</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {{#each noSign}}
+                        <tr>
+                          <td>{{firstName}} / {{secondName}}{{#if thirdName}} / {{thirdName}}{{/if}}</td>
+                          <td><span class="changeLoc" style="cursor: pointer">{{destination}}</span></td>
+                          <td>{{phoneOne}}<br />{{phoneTwo}}<br />{{phoneThree}}</td>
+                          <td>{{signOut}}</td>
+                          <td>{{#if signIn}}{{signIn}}{{else}}
+                              <div class="alert alert-danger" role="alert">FAILED TO SIGN IN</div>
+                            {{/if}}</td>
+                        </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <table class="table">
@@ -392,7 +389,7 @@
               <tr>
                 <td>{{firstName}} / {{secondName}}{{#if thirdName}} / {{thirdName}}{{/if}}</td>
                 <td><span class="changeLoc" style="cursor: pointer">{{destination}}</span></td>
-                <td>{{phoneOne}}<br/>{{phoneTwo}}<br/>{{phoneThree}}</td>
+                <td>{{phoneOne}}<br />{{phoneTwo}}<br />{{phoneThree}}</td>
                 <td>{{signOut}}</td>
                 <td>{{#if signIn}}{{signIn}}{{else}}
                     <div class="alert alert-danger" role="alert">FAILED TO SIGN IN</div>

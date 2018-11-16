@@ -26,3 +26,22 @@
       </div>
     </div>
 </template>
+<template name="purge">
+  <div class="container" style="margin-top: 10vh">
+    <div class="row">
+      <div class="col-md-12 ">
+        <div class="jumbotron">
+          <h1 class="display-4">Purge User Data</h1>
+          <hr class="my-4">
+          <div class="form-group">
+            <label for="purgeCAC">Scan CAC you would like to purge...</label>
+            <input type="text" name="purgeCAC" class="form-control" id="purgeCAC" aria-describedby="purgeCAChelp" placeholder="Scan your CAC Card...">
+            <small id="purgeCAChelp" class="form-text text-danger">This will delete all records this user is involved in.</small>
+          </div>
+
+          <button class="register btn btn-lg btn-primary">Purge User</button>
+        </div>
+        </div>
+      </div>
+    </div>
+</template>

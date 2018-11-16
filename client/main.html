@@ -9,12 +9,16 @@
           overflow-x:hidden;
           background: url('/bg.jpg');
           background-size: cover;
-
         }
+        .locat button {
+          margin: 10px;
+        }
+
 
           </style>
     </head>
     <body>
+      {{#if loggedin}}
       <div class="row">
         <div class="container-fluid">
           <!-- ADMIN/SDO -->
@@ -39,9 +43,9 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="/intake">Intake</a>
-            <a class="dropdown-item" href="#">Purge</a>
+            <a class="dropdown-item" href="/purge">Purge</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Raw DB</a>
+            <a class="dropdown-item download" href="#">Export DB</a>
           </div>
         </li>
       </ul>
@@ -51,6 +55,7 @@
   <!-- END ADMIN/SDO -->
         </div>
       </div>
+      {{/if}}
           {{> yield}}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>

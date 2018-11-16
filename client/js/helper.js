@@ -19,6 +19,12 @@ Template.sdo.helpers({
 
 });
 
+Template.home.helpers({
+  loggedin: function () {
+    return Meteor.userId()
+  }
+})
+
 Template.sdoHistory.helpers({
   primaryDB: ()=> {
       date = Iron.Location.get().path.substring(3,22);
@@ -27,6 +33,12 @@ Template.sdoHistory.helpers({
 })
 
 Template.login.helpers({
+  loggedin: function () {
+    return Meteor.userId()
+  }
+})
+
+Template.base.helpers({
   loggedin: function () {
     return Meteor.userId()
   }
