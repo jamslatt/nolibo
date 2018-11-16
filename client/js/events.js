@@ -173,3 +173,9 @@ Template.intake.events({
   }
 
 })
+
+Template.login.events({
+  'click .logout': function() {
+    Meteor.logout();
+  }
+})

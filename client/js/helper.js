@@ -25,3 +25,9 @@ Template.sdoHistory.helpers({
       return   primaryDB.find({ sdoDate: date });
   }
 })
+
+Template.login.helpers({
+  loggedin: function () {
+    return Meteor.userId()
+  }
+})

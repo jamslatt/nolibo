@@ -1,7 +1,12 @@
-Meteor.publish('primaryDB', function (group) {
-  return primaryDB.find({});
-});
 
+
+Meteor.publish('primaryDB', function (group) {
+    if (this.userId) {
+      return primaryDB.find({});
+    }
+});
 Meteor.publish('phoneDB', function (group) {
-  return phoneDB.find({});
+    if (this.userId) {
+      return phoneDB.find({});
+    }
 });
