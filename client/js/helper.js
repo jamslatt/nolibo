@@ -25,6 +25,17 @@ Template.home.helpers({
   }
 })
 
+Template.marDetail.helpers({
+  name: function() {
+    return Iron.Location.get().path.substring(8,30);
+  },
+  record: function () {
+    let name = Iron.Location.get().path.substring(8,30);
+
+    return primaryDB.find({ $or: [ { firstName: name }, { secondName: name } , { thirdName: name}]});
+  }
+})
+
 Template.sdoHistory.helpers({
   primaryDB: ()=> {
       date = Iron.Location.get().path.substring(3,22);

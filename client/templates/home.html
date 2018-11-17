@@ -361,13 +361,17 @@
                               <div class="alert alert-danger" role="alert">FAILED TO SIGN IN</div>
                             {{/if}}</td>
                         </tr>
+                        {{else}}
+                        <br/>
+                        <div class="alert alert-info" role="alert">
+                          Everyone has signed back in!
+                        </div>
                       {{/each}}
                     </tbody>
                   </table>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
               </div>
             </div>
@@ -435,21 +439,15 @@
           });
         </script>
 
-        <div class="col-md-8">
+        <div class="col-md-12">
           <div class="alert alert-light" style="margin-top: 25px" role="alert">
             Hit <em>Ctrl+F</em> to search for a name or location!
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="alert alert-light" style="margin-top: 25px" role="alert">
-            Total Out:
           </div>
         </div>
         <table class="table">
           <thead>
             <tr>
               <th scope="col">Name</th>
-              <th scope="col">Buddy</th>
               <th scope="col">Location</th>
               <th scope="col">Time Out</th>
               <th scope="col">Sign In</th>

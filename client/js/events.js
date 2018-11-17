@@ -13,6 +13,31 @@ Template.base.events({
 }
 })
 
+Template.base.events({
+  'click .marSearchSubmit': function() {
+    event.preventDefault();
+    let marSearchSubmit = $('[name="marSearch"]').val();
+    Router.go('/search/' + marSearchSubmit);
+  }
+})
+
+Template.purge.events({
+  'click .purge': function () {
+    let pCAC = $('[name="purgeCAC"]').val();
+
+  //  Meteor.call('purge', pCAC);
+
+    Meteor.call('purge', pCAC, (error, result) => {
+      console.log(error);
+      console.log(result);
+    });
+
+
+
+    alert("Removed all records for " + pCAC.substring(35,55));
+  }
+})
+
 Template.signOut.events({
   'click .signIn': function(event) {
     event.preventDefault();
