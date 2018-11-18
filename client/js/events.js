@@ -2,30 +2,33 @@ Meteor.subscribe('primaryDB');
 
 Template.base.events({
   'click .download': function(event) {
-  var nameFile = 'LibertyLog.csv';
-  var date = window.prompt('Enter the date for the records you want to download.', moment().format("YYYYMMDD"))
-  Meteor.call('download', date, function(err, fileContent) {
-    if(fileContent){
-      var blob = new Blob([fileContent], {type: "text/plain;charset=utf-8"});
-      saveAs(blob, nameFile);
-    }
-  });
-}
-})
-
-Template.base.events({
+    var nameFile = 'LibertyLog.csv';
+    var date = window.prompt('Enter the date for the records you want to download.', moment().format("YYYYMMDD"))
+    Meteor.call('download', date, function(err, fileContent) {
+      if (fileContent) {
+        var blob = new Blob([fileContent], {
+          type: "text/plain;charset=utf-8"
+        });
+        saveAs(blob, nameFile);
+      }
+    });
+  },
   'click .marSearchSubmit': function() {
     event.preventDefault();
     let marSearchSubmit = $('[name="marSearch"]').val();
     Router.go('/search/' + marSearchSubmit);
+  },
+  'click .logout': function() {
+    Meteor.logout();
   }
 })
 
+
 Template.purge.events({
-  'click .purge': function () {
+  'click .purge': function() {
     let pCAC = $('[name="purgeCAC"]').val();
 
-  //  Meteor.call('purge', pCAC);
+    //  Meteor.call('purge', pCAC);
 
     Meteor.call('purge', pCAC, (error, result) => {
       console.log(error);
@@ -34,7 +37,7 @@ Template.purge.events({
 
 
 
-    alert("Removed all records for " + pCAC.substring(35,55));
+    alert("Removed all records for " + pCAC.substring(35, 55));
   }
 })
 
@@ -44,14 +47,54 @@ Template.signOut.events({
 
     let pCAC = $('[name="primaryCAC"]').val();
     let sCAC = $('[name="secondaryCAC"]').val();
-    let dest = $('[name="destination"]').val();
     let tCAC = $('[name="thirdCAC"]').val();
     let out = 2;
 
+    let dest = $('[name="destination"]').val();
+
+    if ($('.a').hasClass('active')) {
+      dest = dest + " Small Px";
+    }
+    if ($('.b').hasClass('active')) {
+      dest = dest + " Chow Hall";
+    }
+    if ($('.c').hasClass('active')) {
+      dest = dest + " Main Px";
+    }
+    if ($('.d').hasClass('active')) {
+      dest = dest + " Bravo Troop Store";
+    }
+    if ($('.e').hasClass('active')) {
+      dest = dest + " Performance Strength Center";
+    }
+    if ($('.f').hasClass('active')) {
+      dest = dest + " McLaughlin Gym";
+    }
+    if ($('.g').hasClass('active')) {
+      dest = dest + " Buffalo Wild Wings";
+    }
+    if ($('.h').hasClass('active')) {
+      dest = dest + " Tilted Kilt";
+    }
+    if ($('.i').hasClass('active')) {
+      dest = dest + " South Park Mall";
+    }
+    if ($('.j').hasClass('active')) {
+      dest = dest + " Other";
+    }
+
+
+
+
+
     let pThree = "";
 
-    if (phoneDB.find({CAC: tCAC}).count() > 0) {
-      pThree = phoneDB.findOne({CAC: tCAC}).Phone;
+    if (phoneDB.find({
+        CAC: tCAC
+      }).count() > 0) {
+      pThree = phoneDB.findOne({
+        CAC: tCAC
+      }).Phone;
       out++;
     }
 
@@ -68,8 +111,12 @@ Template.signOut.events({
       destination: dest,
       signOut: new Date(),
       sdoDate: moment().format("YYYYMMDD"),
-      phoneOne: phoneDB.findOne({CAC: pCAC}).Phone,
-      phoneTwo: phoneDB.findOne({CAC: sCAC}).Phone,
+      phoneOne: phoneDB.findOne({
+        CAC: pCAC
+      }).Phone,
+      phoneTwo: phoneDB.findOne({
+        CAC: sCAC
+      }).Phone,
       phoneThree: pThree,
       totalOut: out
     });
@@ -170,15 +217,15 @@ Template.signInVerify.events({
 
 Template.sdo.events({
   'click .changeLoc': function() {
-    let newLocation = window.prompt("Enter new location:", "");
+    let newLocation = "<del>" + this.destination + "</del> " + window.prompt("Enter new location:", "");
 
     primaryDB.update(this._id, {
       $set: {
         destination: newLocation
       }
     });
-
     alert("Location successfully changed!");
+
 
   }
 })

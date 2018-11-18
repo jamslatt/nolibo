@@ -1,3 +1,4 @@
+
 <template name="home">
   <div class="row">
     <div class="container" style="margin-top: 10vh;">
@@ -100,25 +101,25 @@
           </div>
 
 
-          <div class="form-group">
+        <!--  <div class="form-group">
             <label for="secondaryCAC">Destination</label>
             <input type="text" name="destination" class="form-control" id="location" aria-describedby="loc" placeholder="Scan your destination...">
             <small id="loc" class="form-text text-muted">Scan the barcode that matches the location you are traveling to.</small>
-          </div>
+          </div>-->
 
           <div class="row center locat">
-            <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Small Px</button>&nbsp;
-            <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Chow Hall</button>
-            <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Main Px</button>
-            <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Bravo Troop Store</button>
-            <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Performance Strength Center</button>
+            <button type="button" class="btn btn-outline-primary a" data-toggle="button" aria-pressed="false" autocomplete="off">Small Px</button>&nbsp;
+            <button type="button" class="btn btn-outline-primary b" data-toggle="button" aria-pressed="false" autocomplete="off">Chow Hall</button>
+            <button type="button" class="btn btn-outline-primary c" data-toggle="button" aria-pressed="false" autocomplete="off">Main Px</button>
+            <button type="button" class="btn btn-outline-primary d" data-toggle="button" aria-pressed="false" autocomplete="off">Bravo Troop Store</button>
+            <button type="button" class="btn btn-outline-primary e" data-toggle="button" aria-pressed="false" autocomplete="off">Performance Strength Center</button>
           </div>
           <div class="row" style="margin-top: 10px">
-            <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">McLaughlin Gym</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Buffalo Wild Wings</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Tilted Kilt</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">South Park Mall</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-secondary" data-toggle="button" aria-pressed="false" autocomplete="off">Other</button>
+            <button type="button" class="btn btn-outline-primary f" data-toggle="button" aria-pressed="false" autocomplete="off">McLaughlin Gym</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-primary g" data-toggle="button" aria-pressed="false" autocomplete="off">Buffalo Wild Wings</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-primary h" data-toggle="button" aria-pressed="false" autocomplete="off">Tilted Kilt</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-primary i" data-toggle="button" aria-pressed="false" autocomplete="off">South Park Mall</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-secondary j" data-toggle="button" aria-pressed="false" autocomplete="off">Other</button>
           </div>
 
 
@@ -268,7 +269,7 @@
               {{#each primary}}
                 <tr>
                   <td>{{firstName}} / {{secondName}}{{#if thirdName}} / {{thirdName}}{{/if}}</td>
-                  <td>{{destination}}</td>
+                  <td>{{#markdown}}{{destination}}{{/markdown}}</td>
                   <td>{{signOut}}</td>
                   <td><button id="signIn" class="btn btn-sm btn-warning" onclick="location.replace('/si/{{_id}}')">Sign in <i class="fas fa-sign-in-alt"></i></button></td>
                 </tr>
@@ -354,7 +355,7 @@
                       {{#each noSign}}
                         <tr>
                           <td>{{firstName}} / {{secondName}}{{#if thirdName}} / {{thirdName}}{{/if}}</td>
-                          <td><span class="changeLoc" style="cursor: pointer">{{destination}}</span></td>
+                          <td><span class="changeLoc" style="cursor: pointer">{{#markdown}}{{destination}}{{/markdown}}</span></td>
                           <td>{{phoneOne}}<br />{{phoneTwo}}<br />{{phoneThree}}</td>
                           <td>{{signOut}}</td>
                           <td>{{#if signIn}}{{signIn}}{{else}}
@@ -392,7 +393,7 @@
             {{#each primaryDB}}
               <tr>
                 <td>{{firstName}} / {{secondName}}{{#if thirdName}} / {{thirdName}}{{/if}}</td>
-                <td><span class="changeLoc" style="cursor: pointer">{{destination}}</span></td>
+                <td><span class="changeLoc" style="cursor: pointer">{{#markdown}}{{destination}}{{/markdown}}</span></td>
                 <td>{{phoneOne}}<br />{{phoneTwo}}<br />{{phoneThree}}</td>
                 <td>{{signOut}}</td>
                 <td>{{#if signIn}}{{signIn}}{{else}}
@@ -457,7 +458,7 @@
             {{#each primaryDB}}
               <tr>
                 <td>{{firstName}} / {{secondName}}{{#if thirdName}} / {{thirdName}}{{/if}}</td>
-                <td>{{destination}}</td>
+                <td>{{#markdown}}{{destination}}{{/markdown}}</td>
                 <td>{{signOut}}</td>
                 <td>{{#if signIn}}{{signIn}}{{else}}
                     <div class="alert alert-danger" role="alert">FAILED TO SIGN IN</div>

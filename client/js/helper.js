@@ -52,5 +52,8 @@ Template.login.helpers({
 Template.base.helpers({
   loggedin: function () {
     return Meteor.userId()
+  },
+  admin: function () {
+    return Roles.userIsInRole(Meteor.user(), ['admin']);
   }
 })
