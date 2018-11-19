@@ -99,7 +99,7 @@ Template.signOut.events({
       out++;
     }
     else {
-      pThree = "Test day, no phone :D";
+      pThree = "";
     }
 
     if (phoneDB.findOne({
@@ -110,7 +110,7 @@ Template.signOut.events({
       }).Phone;
     } else {
       //alert("Try scanning the first CAC card again. (Read Error/No Intake Record Found)")
-      pOne = "Test day.. no phone :D";
+      pOne = "";
     }
 
     if (phoneDB.findOne({
@@ -121,7 +121,7 @@ Template.signOut.events({
       }).Phone;
     } else {
       //alert("Try scanning the second CAC card again. (Read Error/No Intake Record Found)")
-      pTwo = "Test day.. no phone :D";
+      pTwo = "";
 
     }
 
@@ -173,7 +173,7 @@ Template.signOutOffBase.events({
       }).Phone;
     } else {
       //alert("Try scanning the first CAC card again. (Read Error/No Intake Record Found)")
-      pOne = "Test day.. so no phone :O";
+      pOne = "";
     }
 
     if (phoneDB.findOne({
@@ -184,7 +184,7 @@ Template.signOutOffBase.events({
       }).Phone;
     } else {
       //alert("Try scanning the second CAC card again. (Read Error/No Intake Record Found)")
-      pTwo = "Test day.. so no phone :O";
+      pTwo = "";
     }
     if (phoneDB.findOne({
         CAC: tCAC
@@ -195,7 +195,7 @@ Template.signOutOffBase.events({
       out++;
     } else {
       //alert("Try scanning the third CAC card again. (Read Error/No Intake Record Found)")
-      pThree = "Test day.. so no phone :O";
+      pThree = "";
     }
 
 
