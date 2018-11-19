@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 
 Meteor.startup(() => {
-       Roles.addUsersToRoles('M8m3wtmdeB8wrc7Qh', ['admin']);
+  Roles.addUsersToRoles('xNG7oQm47wyBpiRce', ['admin','super-admin'])
 
 
 

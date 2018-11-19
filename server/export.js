@@ -11,6 +11,13 @@ Meteor.methods({
       primaryDB.remove({ primaryCAC: cac});
       primaryDB.remove({ secondaryCAC: cac});
       primaryDB.remove({ thirdCAC: cac});
-      
-    }
+
+    },
+    /*'publishAll': function(doc) {
+      Meteor.publish('primaryDB', function(group) {
+        if (this.userId) {
+          return primaryDB.find({'signOut': { $lt: new Date((new Date().getTime() - (30 * 24 * 60 * 60 * 1000)))}});
+        }
+      });
+    }*/
 })

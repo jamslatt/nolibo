@@ -65,10 +65,12 @@
               {{#each record}}
                 <tr>
                   <td>{{firstName}} / {{secondName}}{{#if thirdName}} / {{thirdName}}{{/if}}</td>
-                  <td>{{destination}}</td>
+                  <td>{{#markdown}}{{destination}}{{/markdown}}</td>
                   <td>{{signOut}}</td>
-                  <td>{{#if signIn}}{{signIn}}{{else}}<span class="text-danger">No Signin Available</span>{{/if}}</td>
+                  <td>{{#if signIn}}{{signIn}}{{else}}<span class="text-danger">Never Signed Back In</span>{{/if}}</td>
                 </tr>
+                {{else}}
+                <p>No records for this person. Make sure the first letter of the last name is capatialized.</p>
               {{/each}}
             </tbody>
           </table>

@@ -13,6 +13,9 @@ Template.base.events({
       }
     });
   },
+  'click .autopub': function(event) {
+    Meteor.call('publishAll');
+  },
   'click .marSearchSubmit': function() {
     event.preventDefault();
     let marSearchSubmit = $('[name="marSearch"]').val();
@@ -38,6 +41,9 @@ Template.purge.events({
 
 
     alert("Removed all records for " + pCAC.substring(35, 55));
+
+    $('[name="purgeCAC"]').val(null);
+
   }
 })
 
@@ -51,8 +57,9 @@ Template.signOut.events({
     let out = 2;
 
     let dest = $('[name="destination"]').val();
+    //let dest = " ";
 
-    if ($('.a').hasClass('active')) {
+    /*if ($('.a').hasClass('active')) {
       dest = dest + " Small Px";
     }
     if ($('.b').hasClass('active')) {
@@ -71,17 +78,11 @@ Template.signOut.events({
       dest = dest + " McLaughlin Gym";
     }
     if ($('.g').hasClass('active')) {
-      dest = dest + " Buffalo Wild Wings";
-    }
-    if ($('.h').hasClass('active')) {
-      dest = dest + " Tilted Kilt";
-    }
-    if ($('.i').hasClass('active')) {
-      dest = dest + " South Park Mall";
+      dest = dest + " Medical";
     }
     if ($('.j').hasClass('active')) {
       dest = dest + " Other";
-    }
+    }*/
 
 
 
@@ -97,8 +98,32 @@ Template.signOut.events({
       }).Phone;
       out++;
     }
+    else {
+      pThree = "Test day, no phone :D";
+    }
 
+    if (phoneDB.findOne({
+        CAC: pCAC
+      })) {
+      pOne = phoneDB.findOne({
+        CAC: pCAC
+      }).Phone;
+    } else {
+      //alert("Try scanning the first CAC card again. (Read Error/No Intake Record Found)")
+      pOne = "Test day.. no phone :D";
+    }
 
+    if (phoneDB.findOne({
+        CAC: sCAC
+      })) {
+      pTwo = phoneDB.findOne({
+        CAC: sCAC
+      }).Phone;
+    } else {
+      //alert("Try scanning the second CAC card again. (Read Error/No Intake Record Found)")
+      pTwo = "Test day.. no phone :D";
+
+    }
 
 
     primaryDB.insert({
@@ -111,21 +136,19 @@ Template.signOut.events({
       destination: dest,
       signOut: new Date(),
       sdoDate: moment().format("YYYYMMDD"),
-      phoneOne: phoneDB.findOne({
-        CAC: pCAC
-      }).Phone,
-      phoneTwo: phoneDB.findOne({
-        CAC: sCAC
-      }).Phone,
+      phoneOne: pOne,
+      phoneTwo: pTwo,
       phoneThree: pThree,
       totalOut: out
     });
 
-    $('[name="primaryCAC"]').val(null);
-    $('[name="secondaryCAC"]').val(null);
-    $('[name="thirdCAC"]').val(null);
-    $('[name="destination"]').val(null);
-    document.getElementById("form").reset();
+    /*  $('[name="primaryCAC"]').val(null);
+      $('[name="secondaryCAC"]').val(null);
+      $('[name="thirdCAC"]').val(null);
+      $('[name="destination"]').val(null);
+      document.getElementById("form").reset();*/
+    location.reload();
+
   }
 
 })
@@ -139,7 +162,41 @@ Template.signOutOffBase.events({
     let dest = $('[name="destination"]').val();
     let tCAC = $('[name="thirdCAC"]').val();
     let contact = $('[name="phone"]').val();
+    let out = 2;
 
+
+    if (phoneDB.findOne({
+        CAC: pCAC
+      })) {
+      pOne = phoneDB.findOne({
+        CAC: pCAC
+      }).Phone;
+    } else {
+      //alert("Try scanning the first CAC card again. (Read Error/No Intake Record Found)")
+      pOne = "Test day.. so no phone :O";
+    }
+
+    if (phoneDB.findOne({
+        CAC: sCAC
+      })) {
+      pTwo = phoneDB.findOne({
+        CAC: sCAC
+      }).Phone;
+    } else {
+      //alert("Try scanning the second CAC card again. (Read Error/No Intake Record Found)")
+      pTwo = "Test day.. so no phone :O";
+    }
+    if (phoneDB.findOne({
+        CAC: tCAC
+      })) {
+      pThree = phoneDB.findOne({
+        CAC: tCAC
+      }).Phone;
+      out++;
+    } else {
+      //alert("Try scanning the third CAC card again. (Read Error/No Intake Record Found)")
+      pThree = "Test day.. so no phone :O";
+    }
 
 
 
@@ -153,7 +210,8 @@ Template.signOutOffBase.events({
       destination: dest,
       signOut: new Date(),
       sdoDate: moment().format("YYYYMMDD"),
-      phone: contact
+      phone: contact,
+      totalOut: out
     });
 
     $('[name="primaryCAC"]').val(null);
@@ -178,23 +236,22 @@ Template.signInVerify.events({
 
     }
 
-    /*console.log("Testing for" + pCAC + sCAC + tCAC);
-    console.log(this.firstName + this.secondName + this.thirdName);*/
 
     let allPresent = true;
 
     if (this.firstName != pCAC) {
       allPresent = false;
-      console.log(allPresent);
+      alert("Try rescanning the first CAC.");
     }
-
     if (this.secondName != sCAC) {
       allPresent = false;
+      alert("Try rescanning the second CAC.");
     }
 
     if (this.thirdName) {
       if (this.thirdName != tCAC) {
         allPresent = false;
+        alert("Try rescanning the third CAC.");
       }
     }
 
@@ -217,7 +274,7 @@ Template.signInVerify.events({
 
 Template.sdo.events({
   'click .changeLoc': function() {
-    let newLocation = "<del>" + this.destination + "</del> " + window.prompt("Enter new location:", "");
+    let newLocation = "<del>" + this.destination + "</del><br/>" + window.prompt("Enter new location:", "");
 
     primaryDB.update(this._id, {
       $set: {
@@ -239,14 +296,20 @@ Template.intake.events({
     let iDOB = $('[name="DOB"]').val();
     let iPhone = $('[name="phone"]').val();
 
+    let insert = confirm("Insert data for " + iCAC.substring(35,55));
 
 
 
-    phoneDB.insert({
-      CAC: iCAC,
-      DOB: iDOB,
-      Phone: iPhone
-    });
+    if (insert) {
+      phoneDB.insert({
+        CAC: iCAC,
+        DOB: iDOB,
+        Phone: iPhone
+      });
+    }
+    else {
+      alert("Intake record canceled.")
+    }
 
 
     $('[name="intakeCAC"]').val(null);

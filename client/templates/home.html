@@ -5,8 +5,7 @@
       <div class="col-md-12 ">
         <div class="jumbotron">
           <h1 class="display-4">¡No Libo!</h1>
-          <p class="subtitle">Before this... you had no libo. You had no libo because you waited in line for Gumpy to write his buddys name in a notebook. Say goodbye to writing and drawing lines in a green book. The only downside to this is we save
-            trees.</p>
+          <p class="subtitle">The next generation in liberty logs.</p>
           <hr class="my-4">
           <div class="row">
             <div class="col-md-6">
@@ -101,13 +100,13 @@
           </div>
 
 
-        <!--  <div class="form-group">
+          <div class="form-group">
             <label for="secondaryCAC">Destination</label>
             <input type="text" name="destination" class="form-control" id="location" aria-describedby="loc" placeholder="Scan your destination...">
             <small id="loc" class="form-text text-muted">Scan the barcode that matches the location you are traveling to.</small>
-          </div>-->
+          </div>
 
-          <div class="row center locat">
+        <!--  <div class="row center locat">
             <button type="button" class="btn btn-outline-primary a" data-toggle="button" aria-pressed="false" autocomplete="off">Small Px</button>&nbsp;
             <button type="button" class="btn btn-outline-primary b" data-toggle="button" aria-pressed="false" autocomplete="off">Chow Hall</button>
             <button type="button" class="btn btn-outline-primary c" data-toggle="button" aria-pressed="false" autocomplete="off">Main Px</button>
@@ -116,11 +115,9 @@
           </div>
           <div class="row" style="margin-top: 10px">
             <button type="button" class="btn btn-outline-primary f" data-toggle="button" aria-pressed="false" autocomplete="off">McLaughlin Gym</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-primary g" data-toggle="button" aria-pressed="false" autocomplete="off">Buffalo Wild Wings</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-primary h" data-toggle="button" aria-pressed="false" autocomplete="off">Tilted Kilt</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-primary i" data-toggle="button" aria-pressed="false" autocomplete="off">South Park Mall</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-primary g" data-toggle="button" aria-pressed="false" autocomplete="off">Medical</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button type="button" class="btn btn-outline-secondary j" data-toggle="button" aria-pressed="false" autocomplete="off">Other</button>
-          </div>
+          </div>-->
 
 
           <br />
@@ -273,6 +270,9 @@
                   <td>{{signOut}}</td>
                   <td><button id="signIn" class="btn btn-sm btn-warning" onclick="location.replace('/si/{{_id}}')">Sign in <i class="fas fa-sign-in-alt"></i></button></td>
                 </tr>
+                {{else}}
+                <span class="text-danger"><strong>No records found, scan CAC again.</strong></span>
+
               {{/each}}
             </tbody>
           </table>
