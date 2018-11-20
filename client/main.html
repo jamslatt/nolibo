@@ -47,8 +47,13 @@
                     <a class="dropdown-item" href="/intake">Intake</a>
                     <a class="dropdown-item" href="/purge">Purge</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/print" target="_blank">End of Liberty Export</a>
-                    <a class="dropdown-item download" href="#">Export DB</a>
+                    <a class="dropdown-item xp" href="" onclick="print()" >End of Liberty Export</a>
+                    <script>
+                      function print() {
+                        let x = window.prompt("What date would you like to print records for?", moment().format("YYYYMMDD"));
+                        location.replace('/print/' + x);
+                      }
+                    </script>
                   </div>
                 </li>
                 <li class="nav-item">

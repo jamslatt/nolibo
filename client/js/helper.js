@@ -13,7 +13,9 @@ Template.sdo.helpers({
 
 Template.print.helpers({
   primaryDB: ()=> {
-      return primaryDB.find({sdoDate: moment().format("YYYYMMDD")});
+      let date = Iron.Location.get().path.substring(7,16);
+
+      return primaryDB.find({sdoDate: date});
   }
 })
 
