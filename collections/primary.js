@@ -11,6 +11,13 @@ primaryDB.allow({
   },
   update: function(userId, doc) {
     return true;
+  },
+  remove: function(userId, doc) {
+    if (Roles.userIsInRole(userId, ['admin'])) {
+      return true;
+    }
+
+    return true;
   }
 });
 
@@ -38,6 +45,16 @@ primaryDBmap = new SimpleSchema({
   },
   destination: {
     type: String,
+  },
+  epdid_one: {
+    type: String,
+  },
+  epdid_two: {
+    type: String,
+  },
+  epdid_three: {
+    type: String,
+    optional: true
   },
   signOut: {
     type: Date

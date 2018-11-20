@@ -80,3 +80,46 @@
       </div>
     </div>
 </template>
+
+<template name="manual">
+
+  <div class="row">
+    <div class="container jumbotron" style="margin-top: 10vh;">
+      <h1>Manual Sign Out</h1>
+      <hr/>
+      <div class="form-group">
+        <label for="primaryCAC">First Name</label>
+        <input type="text" name="primaryCAC" class="form-control" id="primaryCAC" aria-describedby="pCAChelp" placeholder="Scan your CAC Card...">
+      </div>
+      <div class="form-group">
+        <label for="primaryCAC">First Phone</label>
+        <input type="text" name="fPhone" class="form-control" id="primaryCAC" aria-describedby="pCAChelp" placeholder="Scan your CAC Card...">
+      </div>
+      <div class="form-group">
+        <label for="secondaryCAC">Second Name</label>
+        <input type="text" name="secondaryCAC" class="form-control" id="secondaryCAC" aria-describedby="sCAChelp" placeholder="Scan your CAC Card...">
+      </div>
+      <div class="form-group">
+        <label for="primaryCAC">Second Phone</label>
+        <input type="text" name="sPhone" class="form-control" id="primaryCAC" aria-describedby="pCAChelp" placeholder="Scan your CAC Card...">
+      </div>
+      <div class="form-group">
+        <label for="secondaryCAC">Third Name (optional)</label>
+        <input type="text" name="thirdCAC" class="form-control" id="thirdCAC" aria-describedby="sCAChelp" placeholder="Scan your CAC Card...">
+        <small id="tCAChelp" class="form-text text-muted">Scan the barcode just below your picture on your Military ID (CAC).</small>
+      </div>
+      <div class="form-group">
+        <label for="primaryCAC">Third Phone (optional)</label>
+        <input type="text" name="tPhone" class="form-control" id="primaryCAC" aria-describedby="pCAChelp" placeholder="Scan your CAC Card...">
+      </div>
+      <div class="form-group">
+        <label for="secondaryCAC">Destination</label>
+        <input type="text" name="destination" class="form-control" id="location" aria-describedby="loc" placeholder="Enter the exact location.">
+        <small id="loc" class="form-text text-muted">Enter the exact location you are traveling to.</small>
+      </div>
+      <br />
+      <span class="btn btn-lg signOut btn-primary">Sign Out&nbsp;<i class="fas fa-sign-out-alt"></i></span>
+  </div>
+</div>
+
+</template>

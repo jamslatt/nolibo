@@ -11,6 +11,13 @@ phoneDB.allow({
   },
   update: function(userId, doc) {
     return true;
+  },
+  remove: function(userId, doc) {
+    if (Roles.userIsInRole(userId, ['admin'])) {
+      return true;
+    }
+
+    return true;
   }
 });
 

@@ -51,10 +51,21 @@ Template.signOut.events({
   'click .signIn': function(event) {
     event.preventDefault();
 
+    let goodToGo = true;
+
     let pCAC = $('[name="primaryCAC"]').val();
     let sCAC = $('[name="secondaryCAC"]').val();
     let tCAC = $('[name="thirdCAC"]').val();
     let out = 2;
+
+    let epdid_one = $('[name="primaryCAC"]').val().substring(8,15);
+    epdid_one = parseInt(epdid_one, 32);
+
+    let epdid_two = $('[name="secondaryCAC"]').val().substring(8,15);
+    epdid_two = parseInt(epdid_two, 32);
+
+
+
 
     let dest = $('[name="destination"]').val();
     //let dest = " ";
@@ -87,7 +98,7 @@ Template.signOut.events({
 
 
 
-
+    let epdid_three = "";
     let pThree = "";
 
     if (phoneDB.find({
@@ -97,6 +108,8 @@ Template.signOut.events({
         CAC: tCAC
       }).Phone;
       out++;
+      epdid_three = $('[name="thirdCAC"]').val().substring(8,15);
+      epdid_three = parseInt(epdid_three, 32);
     }
     else {
       pThree = "";
@@ -126,27 +139,27 @@ Template.signOut.events({
     }
 
 
-    primaryDB.insert({
-      primaryCAC: pCAC,
-      secondaryCAC: sCAC,
-      thirdCAC: tCAC,
-      firstName: pCAC.substring(35, 50),
-      secondName: sCAC.substring(35, 50),
-      thirdName: tCAC.substring(35, 50),
-      destination: dest,
-      signOut: new Date(),
-      sdoDate: moment().format("YYYYMMDD"),
-      phoneOne: pOne,
-      phoneTwo: pTwo,
-      phoneThree: pThree,
-      totalOut: out
-    });
+    if (goodToGo) {
+      primaryDB.insert({
+        primaryCAC: pCAC,
+        secondaryCAC: sCAC,
+        thirdCAC: tCAC,
+        firstName: pCAC.substring(35, 50),
+        secondName: sCAC.substring(35, 50),
+        thirdName: tCAC.substring(35, 50),
+        destination: dest,
+        epdid_one: epdid_one,
+        epdid_two: epdid_two,
+        epdid_three: epdid_three,
+        signOut: new Date(),
+        sdoDate: moment().format("YYYYMMDD"),
+        phoneOne: pOne,
+        phoneTwo: pTwo,
+        phoneThree: pThree,
+        totalOut: out
+      });
+    }
 
-    /*  $('[name="primaryCAC"]').val(null);
-      $('[name="secondaryCAC"]').val(null);
-      $('[name="thirdCAC"]').val(null);
-      $('[name="destination"]').val(null);
-      document.getElementById("form").reset();*/
     location.reload();
 
   }
@@ -204,9 +217,9 @@ Template.signOutOffBase.events({
       primaryCAC: pCAC,
       secondaryCAC: sCAC,
       thirdCAC: tCAC,
-      firstName: pCAC.substring(35, 50),
-      secondName: sCAC.substring(35, 50),
-      thirdName: tCAC.substring(35, 50),
+      firstName: pCAC.substring(35, 50).replace(/ +/g, ""),
+      secondName: sCAC.substring(35, 50).replace(/ +/g, ""),
+      thirdName: tCAC.substring(35, 50).replace(/ +/g, ""),
       destination: dest,
       signOut: new Date(),
       sdoDate: moment().format("YYYYMMDD"),
@@ -223,7 +236,7 @@ Template.signOutOffBase.events({
 
 })
 
-Template.signInVerify.events({
+Template.byname.events({
   'click .signIn': function(doc) {
 
     let pCAC = $('[name="primaryCAC"]').val().substring(35, 50).trim();
@@ -272,6 +285,33 @@ Template.signInVerify.events({
   }
 })
 
+
+Template.manual.events({
+  'click .signOut' : function() {
+    primaryDB.insert({
+      primaryCAC: 'Manual Entry',
+      secondaryCAC: 'Manual Entry',
+      thirdCAC: 'Manual Entry',
+      firstName: $('[name="primaryCAC"]').val(),
+      secondName: $('[name="secondaryCAC"]').val(),
+      thirdName: $('[name="thirdCAC"]').val(),
+      destination: $('[name="destination"]').val(),
+      epdid_one: "Manual Entry",
+      epdid_two: "Manual Entry",
+      epdid_three: "Manual Entry",
+      signOut: new Date(),
+      sdoDate: moment().format("YYYYMMDD"),
+      phoneOne: $('[name="fPhone"]').val(),
+      phoneTwo: $('[name="sPhone"]').val(),
+      phoneThree: $('[name="tPhone"]').val(),
+      totalOut: window.prompt("How many are leaving? 2 or 3?", 2)
+    })
+    Router.go('/sdo');
+  }
+})
+
+
+
 Template.sdo.events({
   'click .changeLoc': function() {
     let newLocation = "<del>" + this.destination + "</del><br/>" + window.prompt("Enter new location:", "");
@@ -283,6 +323,20 @@ Template.sdo.events({
     });
     alert("Location successfully changed!");
 
+
+  },
+  'click .manSign': function() {
+    primaryDB.update(this._id, {
+      $set: {
+        signIn: new Date()
+      }
+    });
+    alert("Signed in.")
+  },
+  'click .remove': function() {
+    let x = window.confirm("Are you sure you want to delete this record?");
+    if (x)
+      primaryDB.remove(this._id);
 
   }
 })
