@@ -170,13 +170,41 @@ Template.signOutOffBase.events({
   'click .signIn': function(event) {
     event.preventDefault();
 
+    let goodToGo = true;
+
     let pCAC = $('[name="primaryCAC"]').val();
     let sCAC = $('[name="secondaryCAC"]').val();
-    let dest = $('[name="destination"]').val();
     let tCAC = $('[name="thirdCAC"]').val();
-    let contact = $('[name="phone"]').val();
     let out = 2;
 
+    let epdid_one = $('[name="primaryCAC"]').val().substring(8,15);
+    epdid_one = parseInt(epdid_one, 32);
+
+    let epdid_two = $('[name="secondaryCAC"]').val().substring(8,15);
+    epdid_two = parseInt(epdid_two, 32);
+
+
+
+
+    let dest = $('[name="destination"]').val();
+
+
+    let epdid_three = "";
+    let pThree = "";
+
+    if (phoneDB.find({
+        CAC: tCAC
+      }).count() > 0) {
+      pThree = phoneDB.findOne({
+        CAC: tCAC
+      }).Phone;
+      out++;
+      epdid_three = $('[name="thirdCAC"]').val().substring(8,15);
+      epdid_three = parseInt(epdid_three, 32);
+    }
+    else {
+      pThree = "";
+    }
 
     if (phoneDB.findOne({
         CAC: pCAC
@@ -198,43 +226,35 @@ Template.signOutOffBase.events({
     } else {
       //alert("Try scanning the second CAC card again. (Read Error/No Intake Record Found)")
       pTwo = "";
-    }
-    if (phoneDB.findOne({
-        CAC: tCAC
-      })) {
-      pThree = phoneDB.findOne({
-        CAC: tCAC
-      }).Phone;
-      out++;
-    } else {
-      //alert("Try scanning the third CAC card again. (Read Error/No Intake Record Found)")
-      pThree = "";
+
     }
 
 
+    if (goodToGo) {
+      primaryDB.insert({
+        primaryCAC: pCAC,
+        secondaryCAC: sCAC,
+        thirdCAC: tCAC,
+        firstName: pCAC.substring(35, 50),
+        secondName: sCAC.substring(35, 50),
+        thirdName: tCAC.substring(35, 50),
+        destination: dest,
+        epdid_one: epdid_one,
+        epdid_two: epdid_two,
+        epdid_three: epdid_three,
+        signOut: new Date(),
+        sdoDate: moment().format("YYYYMMDD"),
+        phoneOne: pOne,
+        phoneTwo: pTwo,
+        phoneThree: pThree,
+        totalOut: out
+      });
+    }
 
-    primaryDB.insert({
-      primaryCAC: pCAC,
-      secondaryCAC: sCAC,
-      thirdCAC: tCAC,
-      firstName: pCAC.substring(35, 50).replace(/ +/g, ""),
-      secondName: sCAC.substring(35, 50).replace(/ +/g, ""),
-      thirdName: tCAC.substring(35, 50).replace(/ +/g, ""),
-      destination: dest,
-      signOut: new Date(),
-      sdoDate: moment().format("YYYYMMDD"),
-      phone: contact,
-      totalOut: out
-    });
+    location.reload();
 
-    $('[name="primaryCAC"]').val(null);
-    $('[name="secondaryCAC"]').val(null);
-    $('[name="thirdCAC"]').val(null);
-    $('[name="destination"]').val(null);
-    $('[name="phone"]').val(null);
   }
-
-})
+});
 
 Template.byname.events({
   'click .signIn': function(doc) {
