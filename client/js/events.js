@@ -68,35 +68,6 @@ Template.signOut.events({
 
 
     let dest = $('[name="destination"]').val();
-    //let dest = " ";
-
-    /*if ($('.a').hasClass('active')) {
-      dest = dest + " Small Px";
-    }
-    if ($('.b').hasClass('active')) {
-      dest = dest + " Chow Hall";
-    }
-    if ($('.c').hasClass('active')) {
-      dest = dest + " Main Px";
-    }
-    if ($('.d').hasClass('active')) {
-      dest = dest + " Bravo Troop Store";
-    }
-    if ($('.e').hasClass('active')) {
-      dest = dest + " Performance Strength Center";
-    }
-    if ($('.f').hasClass('active')) {
-      dest = dest + " McLaughlin Gym";
-    }
-    if ($('.g').hasClass('active')) {
-      dest = dest + " Medical";
-    }
-    if ($('.j').hasClass('active')) {
-      dest = dest + " Other";
-    }*/
-
-
-
 
     let epdid_three = "";
     let pThree = "";
