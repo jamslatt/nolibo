@@ -11,6 +11,12 @@ Template.sdo.helpers({
 
 });
 
+Template.print.helpers({
+  primaryDB: ()=> {
+      return primaryDB.find({sdoDate: moment().format("YYYYMMDD")});
+  }
+})
+
 Template.home.helpers({
   loggedin: function () {
     return Meteor.userId()
