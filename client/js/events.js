@@ -128,6 +128,10 @@ Template.signOut.events({
         phoneTwo: pTwo,
         phoneThree: pThree,
         totalOut: out
+      }, function(error, result) {
+        if (error) {
+          alert(error);
+        }
       });
     }
 
@@ -219,6 +223,10 @@ Template.signOutOffBase.events({
         phoneTwo: pTwo,
         phoneThree: pThree,
         totalOut: out
+      }, function(error, result) {
+        if (error) {
+          alert(error);
+        }
       });
     }
 
@@ -266,8 +274,12 @@ Template.byname.events({
         $set: {
           signIn: new Date()
         }
+      }, function(error, result){
+        if (error) {
+          alert(error);
+        }
       });
-      console.log("Signed in.")
+
 
     }
 
