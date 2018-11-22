@@ -66,7 +66,6 @@ Template.signOut.events({
 
 
 
-
     let dest = $('[name="destination"]').val();
 
     let epdid_three = "";
@@ -94,7 +93,7 @@ Template.signOut.events({
       }).Phone;
     } else {
       //alert("Try scanning the first CAC card again. (Read Error/No Intake Record Found)")
-      pOne = "";
+      pOne = window.prompt("Enter a phone number..",null);
     }
 
     if (phoneDB.findOne({
