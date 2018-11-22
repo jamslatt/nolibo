@@ -27,7 +27,8 @@ phoneDBmap = new SimpleSchema({
     type: String
   },
   DOB: {
-    type: String
+    type: String,
+    optional: true
   },
   Phone: {
     type: String
