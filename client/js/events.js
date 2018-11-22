@@ -93,7 +93,7 @@ Template.signOut.events({
       }).Phone;
     } else {
       //alert("Try scanning the first CAC card again. (Read Error/No Intake Record Found)")
-      pOne = window.prompt("Enter a phone number..",null);
+      pOne = window.prompt("Enter a phone number..");
     }
 
     if (phoneDB.findOne({
@@ -130,6 +130,9 @@ Template.signOut.events({
       }, function(error, result) {
         if (error) {
           alert(error);
+        }
+        else {
+          alert("Successfully signed out " + firstName + " " + secondName + " " + thirdName);
         }
       });
     }
@@ -225,6 +228,9 @@ Template.signOutOffBase.events({
       }, function(error, result) {
         if (error) {
           alert(error);
+        }
+        else {
+          alert("Successfully signed out " + firstName + " " + secondName + " " + thirdName);
         }
       });
     }
