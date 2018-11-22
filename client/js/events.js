@@ -188,7 +188,7 @@ Template.signOutOffBase.events({
       }).Phone;
     } else {
       //alert("Try scanning the first CAC card again. (Read Error/No Intake Record Found)")
-      pOne = "";
+      pOne = window.prompt("Enter your phone number...");
     }
 
     if (phoneDB.findOne({
