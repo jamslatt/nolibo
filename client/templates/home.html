@@ -20,6 +20,8 @@
           <div class="row">
             <div class="col-md-12">
               <a href="/offbase" style="width: 100%" class="btn btn-lg btn-outline-success">Leave Fort Lee (off base)</a>
+              <br/><br/>
+              <p>Don't have a CAC? <a href="/manual" >Manually sign out here.</a></p>
             </div>
             <div class="col-md-12">
               <br />
@@ -49,7 +51,7 @@
           <hr class="my-4">
           <form>
             <div class="form-group">
-              <input type="text" class="form-control" id="cacOne" placeholder="Scan the first CAC">
+              <input type="text" class="form-control" id="cacOne" placeholder="Scan a CAC...">
             </div>
           </form>
           <script>
@@ -238,6 +240,7 @@
 
 
             <hr class="my-4">
+            {{#if firstName}}
             <div class="form-group">
               <label for="primaryCAC">{{ firstName }} scan your CAC...</label>
               <input type="text" name="primaryCAC" class="form-control" id="primaryCAC" aria-describedby="pCAChelp" placeholder="Scan your CAC Card...">
@@ -256,7 +259,9 @@
               </div>
             {{/if}}
             <button style="width:100%" class="btn btn-lg btn-outline-primary signIn">Sign In</button>
-
+            {{else}}
+            No record for this EPDID... try another ID.
+            {{/if}}
           </div>
         </div>
       </div>

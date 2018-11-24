@@ -131,9 +131,6 @@ Template.signOut.events({
         if (error) {
           alert(error);
         }
-        else {
-          alert("Successfully signed out " + firstName + " " + secondName + " " + thirdName);
-        }
       });
     }
 
