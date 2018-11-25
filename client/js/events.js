@@ -34,8 +34,10 @@ Template.purge.events({
     //  Meteor.call('purge', pCAC);
 
     Meteor.call('purge', pCAC, (error, result) => {
-      console.log(error);
-      console.log(result);
+      if (error) {
+        alert(error);
+      }
+
     });
 
 
@@ -48,6 +50,11 @@ Template.purge.events({
 })
 
 Template.signOut.events({
+  'click .pChange': function(event) {
+    let cac = window.prompt("Scan your CAC",null);
+    //let oldPhone = phoneDB.findOne({CAC: cac}).Phone;
+    let phone = window.prompt("Enter the new phone number...", )
+  },
   'click .signIn': function(event) {
     event.preventDefault();
 
@@ -64,6 +71,10 @@ Template.signOut.events({
     let epdid_two = $('[name="secondaryCAC"]').val().substring(8,15);
     epdid_two = parseInt(epdid_two, 32);
 
+    if (pCAC == sCAC) {
+      alert("You cannot sign out with yourself.");
+      return;
+    }
 
 
     let dest = $('[name="destination"]').val();
