@@ -169,6 +169,10 @@ Template.signOutOffBase.events({
     epdid_two = parseInt(epdid_two, 32);
 
 
+    if (pCAC == sCAC) {
+      alert("You cannot sign out with yourself.");
+      return;
+    }
 
 
     let dest = $('[name="destination"]').val();
