@@ -57,10 +57,10 @@ primaryDBmap = new SimpleSchema({
     optional: true
   },
   signOut: {
-    type: Date
+    type: String
   },
   signIn: {
-    type: Date,
+    type: String,
     optional: true
   },
   sdoDate: {
@@ -77,6 +77,9 @@ primaryDBmap = new SimpleSchema({
   phoneThree: {
     type: String,
     optional: true
+  },
+  logDate: {
+    type: Date
   },
   totalOut: {
     type: Number,

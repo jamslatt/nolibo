@@ -4,7 +4,7 @@ Meteor.publish('primaryDB', function(group) {
       return primaryDB.find({});
     } else {
       return primaryDB.find({
-        'signOut': {
+        'logDate': {
           $gte: new Date((new Date().getTime() - (30 * 24 * 60 * 60 * 1000)))
         }
       });

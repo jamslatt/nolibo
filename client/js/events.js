@@ -71,6 +71,19 @@ Template.signOut.events({
     let epdid_two = $('[name="secondaryCAC"]').val().substring(8,15);
     epdid_two = parseInt(epdid_two, 32);
 
+    if (primaryDB.find({ epdid_one: this.epdid_one, sdoDate: moment().format("YYYYMMDD") })) {
+      alert("You already have signed out. Sign back in!");
+      return;
+    }
+    else if (primaryDB.find({ epdid_two: this.epdid_two, sdoDate: moment().format("YYYYMMDD") })) {
+      alert("You already have signed out. Sign back in!");
+      return;
+    }
+    else if (primaryDB.find({ epdid_three: this.epdid_three, sdoDate: moment().format("YYYYMMDD") })) {
+      alert("You already have signed out. Sign back in!");
+      return;
+    }
+
     if (pCAC == sCAC) {
       alert("You cannot sign out with yourself.");
       return;
@@ -119,7 +132,6 @@ Template.signOut.events({
 
     }
 
-
     if (goodToGo) {
       primaryDB.insert({
         primaryCAC: pCAC,
@@ -132,11 +144,12 @@ Template.signOut.events({
         epdid_one: epdid_one,
         epdid_two: epdid_two,
         epdid_three: epdid_three,
-        signOut: new Date(),
+        signOut: moment().format("H:mm  YYYYMMDD"),
         sdoDate: moment().format("YYYYMMDD"),
         phoneOne: pOne,
         phoneTwo: pTwo,
         phoneThree: pThree,
+        logDate: new Date(),
         totalOut: out
       }, function(error, result) {
         if (error) {
@@ -231,11 +244,12 @@ Template.signOutOffBase.events({
         epdid_one: epdid_one,
         epdid_two: epdid_two,
         epdid_three: epdid_three,
-        signOut: new Date(),
+        signOut: moment().format("H:mm  YYYYMMDD"),
         sdoDate: moment().format("YYYYMMDD"),
         phoneOne: pOne,
         phoneTwo: pTwo,
         phoneThree: pThree,
+        logDate: new Date(),
         totalOut: out
       }, function(error, result) {
         if (error) {
@@ -268,17 +282,17 @@ Template.byname.events({
 
     let allPresent = true;
 
-    if (this.firstName != pCAC) {
+    if (this.firstName.toUpperCase() != pCAC.toUpperCase()) {
       allPresent = false;
       alert("Try rescanning the first CAC.");
     }
-    if (this.secondName != sCAC) {
+    if (this.secondName.toUpperCase() != sCAC.toUpperCase()) {
       allPresent = false;
       alert("Try rescanning the second CAC.");
     }
 
     if (this.thirdName) {
-      if (this.thirdName != tCAC) {
+      if (this.thirdName.toUpperCase() != tCAC.toUpperCase()) {
         allPresent = false;
         alert("Try rescanning the third CAC.");
       }
@@ -289,7 +303,7 @@ Template.byname.events({
     if (allPresent) {
       primaryDB.update(this._id, {
         $set: {
-          signIn: new Date()
+          signIn: moment().format("H:mm  YYYYMMDD")
         }
       }, function(error, result){
         if (error) {
@@ -319,11 +333,12 @@ Template.manual.events({
       epdid_one: "Manual Entry",
       epdid_two: "Manual Entry",
       epdid_three: "Manual Entry",
-      signOut: new Date(),
+      signOut: moment().format("H:mm  YYYYMMDD"),
       sdoDate: moment().format("YYYYMMDD"),
       phoneOne: $('[name="fPhone"]').val(),
       phoneTwo: $('[name="sPhone"]').val(),
       phoneThree: $('[name="tPhone"]').val(),
+      logDate: new Date(),
       totalOut: window.prompt("How many are leaving? 2 or 3?", 2)
     })
     Router.go('/sdo');
@@ -348,7 +363,7 @@ Template.sdo.events({
   'click .manSign': function() {
     primaryDB.update(this._id, {
       $set: {
-        signIn: new Date()
+        signIn: moment().format("H:mm  YYYYMMDD")
       }
     });
     alert("Signed in.")
