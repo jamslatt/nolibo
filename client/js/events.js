@@ -71,18 +71,7 @@ Template.signOut.events({
     let epdid_two = $('[name="secondaryCAC"]').val().substring(8,15);
     epdid_two = parseInt(epdid_two, 32);
 
-    if (primaryDB.find({ epdid_one: this.epdid_one, sdoDate: moment().format("YYYYMMDD") })) {
-      alert("You already have signed out. Sign back in!");
-      return;
-    }
-    else if (primaryDB.find({ epdid_two: this.epdid_two, sdoDate: moment().format("YYYYMMDD") })) {
-      alert("You already have signed out. Sign back in!");
-      return;
-    }
-    else if (primaryDB.find({ epdid_three: this.epdid_three, sdoDate: moment().format("YYYYMMDD") })) {
-      alert("You already have signed out. Sign back in!");
-      return;
-    }
+
 
     if (pCAC == sCAC) {
       alert("You cannot sign out with yourself.");
@@ -130,6 +119,19 @@ Template.signOut.events({
       //alert("Try scanning the second CAC card again. (Read Error/No Intake Record Found)")
       pTwo = "";
 
+    }
+
+    if (primaryDB.find({ primaryCAC: pCAC, sdoDate: moment().format("YYYYMMDD") }).count() > 0) {
+      alert("You already have signed out. Sign back in!");
+      return;
+    }
+    else if (primaryDB.find({ secondaryCAC: sCAC, sdoDate: moment().format("YYYYMMDD") }).count() > 0) {
+      alert("You already have signed out. Sign back in!");
+      return;
+    }
+    else if (primaryDB.find({ thirdCAC: tCAC, sdoDate: moment().format("YYYYMMDD") }).count() > 0) {
+      alert("You already have signed out. Sign back in!");
+      return;
     }
 
     if (goodToGo) {
