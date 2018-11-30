@@ -121,15 +121,15 @@ Template.signOut.events({
 
     }
 
-    if (primaryDB.find({ primaryCAC: pCAC, sdoDate: moment().format("YYYYMMDD") }).count() > 0) {
+    if (primaryDB.find({ primaryCAC: pCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null }).count() > 0) {
       alert("You already have signed out. Sign back in!");
       return;
     }
-    else if (primaryDB.find({ secondaryCAC: sCAC, sdoDate: moment().format("YYYYMMDD") }).count() > 0) {
+    else if (primaryDB.find({ secondaryCAC: sCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null }).count() > 0) {
       alert("You already have signed out. Sign back in!");
       return;
     }
-    else if (primaryDB.find({ thirdCAC: tCAC, sdoDate: moment().format("YYYYMMDD") }).count() > 0) {
+    else if (primaryDB.find({ thirdCAC: tCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null }).count() > 0) {
       alert("You already have signed out. Sign back in!");
       return;
     }
