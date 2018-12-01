@@ -319,11 +319,11 @@ Template.byname.events({
 
     let allPresent = true;
 
-    if (this.firstCAC.toUpperCase() != pCAC.toUpperCase()) {
+    if (this.primaryCAC.toUpperCase() != pCAC.toUpperCase()) {
       allPresent = false;
       alert("Try rescanning the first CAC.");
     }
-    if (this.secondCAC.toUpperCase() != sCAC.toUpperCase()) {
+    if (this.secondaryCAC.toUpperCase() != sCAC.toUpperCase()) {
       allPresent = false;
       alert("Try rescanning the second CAC.");
     }
