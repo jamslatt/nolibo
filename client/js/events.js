@@ -71,6 +71,15 @@ Template.signOut.events({
     let epdid_two = $('[name="secondaryCAC"]').val().substring(8,15);
     epdid_two = parseInt(epdid_two, 32);
 
+    if (pCAC.length < 89) {
+      pCAC = " " + pCAC;
+    }
+    else if (sCAC.length < 89) {
+      sCAC = " " + sCAC;
+    }
+    else if (tCAC.length < 89) {
+      tCAC = " " + tCAC;
+    }
 
 
     if (pCAC == sCAC) {
@@ -139,9 +148,9 @@ Template.signOut.events({
         primaryCAC: pCAC,
         secondaryCAC: sCAC,
         thirdCAC: tCAC,
-        firstName: pCAC.substring(35, 50),
-        secondName: sCAC.substring(35, 50),
-        thirdName: tCAC.substring(35, 50),
+        firstName: pCAC.substring(35, 50) + pCAC.substring(15,16),
+        secondName: sCAC.substring(35, 50) + sCAC.substring(15,16),
+        thirdName: tCAC.substring(35, 50) + tCAC.substring(15,16),
         destination: dest,
         epdid_one: epdid_one,
         epdid_two: epdid_two,
@@ -157,8 +166,12 @@ Template.signOut.events({
         if (error) {
           alert(error);
         }
+        else {
+          alert("Successfully signed out!");
+        }
       });
     }
+
 
     location.reload();
 
@@ -183,6 +196,16 @@ Template.signOutOffBase.events({
     let epdid_two = $('[name="secondaryCAC"]').val().substring(8,15);
     epdid_two = parseInt(epdid_two, 32);
 
+    if (pCAC.length < 89) {
+      pCAC = " " + pCAC;
+    }
+    else if (sCAC.length < 89) {
+      sCAC = " " + sCAC;
+    }
+    else if (tCAC.length < 89) {
+      tCAC = " " + tCAC;
+    }
+
 
     if (pCAC == sCAC) {
       alert("You cannot sign out with yourself.");
@@ -191,7 +214,6 @@ Template.signOutOffBase.events({
 
 
     let dest = $('[name="destination"]').val();
-
 
     let epdid_three = "";
     let pThree = "";
@@ -218,7 +240,7 @@ Template.signOutOffBase.events({
       }).Phone;
     } else {
       //alert("Try scanning the first CAC card again. (Read Error/No Intake Record Found)")
-      pOne = window.prompt("Enter your phone number...");
+      pOne = window.prompt("Enter a phone number..");
     }
 
     if (phoneDB.findOne({
@@ -233,15 +255,27 @@ Template.signOutOffBase.events({
 
     }
 
+    if (primaryDB.find({ primaryCAC: pCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null }).count() > 0) {
+      alert("You already have signed out. Sign back in!");
+      return;
+    }
+    else if (primaryDB.find({ secondaryCAC: sCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null }).count() > 0) {
+      alert("You already have signed out. Sign back in!");
+      return;
+    }
+    else if (primaryDB.find({ thirdCAC: tCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null }).count() > 0) {
+      alert("You already have signed out. Sign back in!");
+      return;
+    }
 
     if (goodToGo) {
       primaryDB.insert({
         primaryCAC: pCAC,
         secondaryCAC: sCAC,
         thirdCAC: tCAC,
-        firstName: pCAC.substring(35, 50),
-        secondName: sCAC.substring(35, 50),
-        thirdName: tCAC.substring(35, 50),
+        firstName: pCAC.substring(35, 50) + pCAC.substring(15,16),
+        secondName: sCAC.substring(35, 50) + sCAC.substring(15,16),
+        thirdName: tCAC.substring(35, 50) + tCAC.substring(15,16),
         destination: dest,
         epdid_one: epdid_one,
         epdid_two: epdid_two,
@@ -258,10 +292,11 @@ Template.signOutOffBase.events({
           alert(error);
         }
         else {
-          alert("Successfully signed out " + firstName + " " + secondName + " " + thirdName);
+          alert("Successfully signed out!");
         }
       });
     }
+
 
     location.reload();
 
