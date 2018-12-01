@@ -60,6 +60,17 @@ Template.signOut.events({
 
     let goodToGo = true;
 
+    /*let co = Meteor.user().emails[0].address;
+    console.log(co);
+    let cmpny = " ";
+
+    if (co.includes("bravo")) {
+      cmpny = "bravo";
+    }
+    if (co.includes("alpha")) {
+      cmpny = "alpha";
+    }*/
+
     let pCAC = $('[name="primaryCAC"]').val();
     let sCAC = $('[name="secondaryCAC"]').val();
     let tCAC = $('[name="thirdCAC"]').val();
@@ -162,6 +173,7 @@ Template.signOut.events({
         phoneThree: pThree,
         logDate: new Date(),
         totalOut: out
+        //company: cmpny
       }, function(error, result) {
         if (error) {
           alert(error);
@@ -328,13 +340,13 @@ Template.byname.events({
       alert("Try rescanning the second CAC.");
     }
 
-    if (this.thirdName) {
+/*    if (this.thirdCAC) {
       if (this.thirdCAC.toUpperCase() != tCAC.toUpperCase()) {
         allPresent = false;
         alert("Try rescanning the third CAC.");
       }
     }
-
+*/
     //console.log(allPresent);
 
     if (allPresent) {
