@@ -321,12 +321,6 @@ Template.byname.events({
     let pCAC = $('[name="primaryCAC"]').val();
     let sCAC = $('[name="secondaryCAC"]').val();
 
-    let tCAC = " ";
-
-    if (this.thirdName) {
-      tCAC = $('[name="thirdCAC"]').val();
-
-    }
 
 
     let allPresent = true;
@@ -334,10 +328,12 @@ Template.byname.events({
     if (this.primaryCAC.toUpperCase() != pCAC.toUpperCase()) {
       allPresent = false;
       alert("Try rescanning the first CAC.");
+      return;
     }
     if (this.secondaryCAC.toUpperCase() != sCAC.toUpperCase()) {
       allPresent = false;
       alert("Try rescanning the second CAC.");
+      return;
     }
 
 /*    if (this.thirdCAC) {
@@ -357,6 +353,9 @@ Template.byname.events({
       }, function(error, result){
         if (error) {
           alert(error);
+        }
+        else {
+          alert("Successfully signed back in.")
         }
       });
 
