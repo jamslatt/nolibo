@@ -306,30 +306,30 @@ Template.signOutOffBase.events({
 Template.byname.events({
   'click .signIn': function(doc) {
 
-    let pCAC = $('[name="primaryCAC"]').val().substring(35, 50).trim();
-    let sCAC = $('[name="secondaryCAC"]').val().substring(35, 50).trim();
+    let pCAC = $('[name="primaryCAC"]').val();
+    let sCAC = $('[name="secondaryCAC"]').val();
 
     let tCAC = " ";
 
     if (this.thirdName) {
-      tCAC = $('[name="thirdCAC"]').val().substring(35, 50).trim();
+      tCAC = $('[name="thirdCAC"]').val();
 
     }
 
 
     let allPresent = true;
 
-    if (this.firstName.toUpperCase() != pCAC.toUpperCase()) {
+    if (this.firstCAC.toUpperCase() != pCAC.toUpperCase()) {
       allPresent = false;
       alert("Try rescanning the first CAC.");
     }
-    if (this.secondName.toUpperCase() != sCAC.toUpperCase()) {
+    if (this.secondCAC.toUpperCase() != sCAC.toUpperCase()) {
       allPresent = false;
       alert("Try rescanning the second CAC.");
     }
 
     if (this.thirdName) {
-      if (this.thirdName.toUpperCase() != tCAC.toUpperCase()) {
+      if (this.thirdCAC.toUpperCase() != tCAC.toUpperCase()) {
         allPresent = false;
         alert("Try rescanning the third CAC.");
       }
