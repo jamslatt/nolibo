@@ -22,7 +22,13 @@ Template.base.events({
     Router.go('/search/' + marSearchSubmit);
   },
   'click .logout': function() {
-    Meteor.logout();
+    let x = confirm("Are you sure you want to Disconnect from server? NoLibo will not function.");
+    if (x)
+      Meteor.logout();
+    else
+      alert("Canceled Disconnect.")
+
+
   }
 })
 
@@ -60,7 +66,7 @@ Template.signOut.events({
 
     let goodToGo = true;
 
-    /*let co = Meteor.user().emails[0].address;
+    let co = Meteor.user().emails[0].address;
     console.log(co);
     let cmpny = " ";
 
@@ -69,7 +75,7 @@ Template.signOut.events({
     }
     if (co.includes("alpha")) {
       cmpny = "alpha";
-    }*/
+    }
 
     let pCAC = $('[name="primaryCAC"]').val();
     let sCAC = $('[name="secondaryCAC"]').val();
@@ -82,6 +88,7 @@ Template.signOut.events({
     let epdid_two = $('[name="secondaryCAC"]').val().substring(8,15);
     epdid_two = parseInt(epdid_two, 32);
 
+    // If too short
     if (pCAC.length < 89) {
       pCAC = " " + pCAC;
     }
@@ -172,8 +179,8 @@ Template.signOut.events({
         phoneTwo: pTwo,
         phoneThree: pThree,
         logDate: new Date(),
-        totalOut: out
-        //company: cmpny
+        totalOut: out,
+        company: cmpny
       }, function(error, result) {
         if (error) {
           alert(error);
@@ -191,135 +198,13 @@ Template.signOut.events({
 
 })
 
-Template.signOutOffBase.events({
-  'click .signIn': function(event) {
-    event.preventDefault();
 
-    let goodToGo = true;
-
-    let pCAC = $('[name="primaryCAC"]').val();
-    let sCAC = $('[name="secondaryCAC"]').val();
-    let tCAC = $('[name="thirdCAC"]').val();
-    let out = 2;
-
-    let epdid_one = $('[name="primaryCAC"]').val().substring(8,15);
-    epdid_one = parseInt(epdid_one, 32);
-
-    let epdid_two = $('[name="secondaryCAC"]').val().substring(8,15);
-    epdid_two = parseInt(epdid_two, 32);
-
-    if (pCAC.length < 89) {
-      pCAC = " " + pCAC;
-    }
-    else if (sCAC.length < 89) {
-      sCAC = " " + sCAC;
-    }
-    else if (tCAC.length < 89) {
-      tCAC = " " + tCAC;
-    }
-
-
-    if (pCAC == sCAC) {
-      alert("You cannot sign out with yourself.");
-      return;
-    }
-
-
-    let dest = $('[name="destination"]').val();
-
-    let epdid_three = "";
-    let pThree = "";
-
-    if (phoneDB.find({
-        CAC: tCAC
-      }).count() > 0) {
-      pThree = phoneDB.findOne({
-        CAC: tCAC
-      }).Phone;
-      out++;
-      epdid_three = $('[name="thirdCAC"]').val().substring(8,15);
-      epdid_three = parseInt(epdid_three, 32);
-    }
-    else {
-      pThree = "";
-    }
-
-    if (phoneDB.findOne({
-        CAC: pCAC
-      })) {
-      pOne = phoneDB.findOne({
-        CAC: pCAC
-      }).Phone;
-    } else {
-      //alert("Try scanning the first CAC card again. (Read Error/No Intake Record Found)")
-      pOne = window.prompt("Enter a phone number..");
-    }
-
-    if (phoneDB.findOne({
-        CAC: sCAC
-      })) {
-      pTwo = phoneDB.findOne({
-        CAC: sCAC
-      }).Phone;
-    } else {
-      //alert("Try scanning the second CAC card again. (Read Error/No Intake Record Found)")
-      pTwo = "";
-
-    }
-
-    if (primaryDB.find({ primaryCAC: pCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null }).count() > 0) {
-      alert("You already have signed out. Sign back in!");
-      return;
-    }
-    else if (primaryDB.find({ secondaryCAC: sCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null }).count() > 0) {
-      alert("You already have signed out. Sign back in!");
-      return;
-    }
-    else if (primaryDB.find({ thirdCAC: tCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null }).count() > 0) {
-      alert("You already have signed out. Sign back in!");
-      return;
-    }
-
-    if (goodToGo) {
-      primaryDB.insert({
-        primaryCAC: pCAC,
-        secondaryCAC: sCAC,
-        thirdCAC: tCAC,
-        firstName: pCAC.substring(35, 50) + pCAC.substring(15,16),
-        secondName: sCAC.substring(35, 50) + sCAC.substring(15,16),
-        thirdName: tCAC.substring(35, 50) + tCAC.substring(15,16),
-        destination: dest,
-        epdid_one: epdid_one,
-        epdid_two: epdid_two,
-        epdid_three: epdid_three,
-        signOut: moment().format("H:mm  YYYYMMDD"),
-        sdoDate: moment().format("YYYYMMDD"),
-        phoneOne: pOne,
-        phoneTwo: pTwo,
-        phoneThree: pThree,
-        logDate: new Date(),
-        totalOut: out
-      }, function(error, result) {
-        if (error) {
-          alert(error);
-        }
-        else {
-          alert("Successfully signed out!");
-        }
-      });
-    }
-
-
-    location.reload();
-
-  }
-});
 
 Template.byname.events({
   'click .signIn': function(doc) {
 
-    let pCAC = $('[name="primaryCAC"]').val();
-    let sCAC = $('[name="secondaryCAC"]').val();
+    let pCAC = $('[name="primaryCAC"]').val().trim();
+    let sCAC = $('[name="secondaryCAC"]').val().trim();
 
 
 
@@ -343,7 +228,6 @@ Template.byname.events({
       }
     }
 */
-    //console.log(allPresent);
 
     if (allPresent) {
       primaryDB.update(this._id, {
@@ -389,7 +273,7 @@ Template.manual.events({
       logDate: new Date(),
       totalOut: window.prompt("How many are leaving? 2 or 3?", 2)
     })
-    Router.go('/sdo');
+    Router.go('/');
   }
 })
 

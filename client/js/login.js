@@ -5,6 +5,9 @@ Template.login.events({
         var password = $('[name=password]').val();
         Meteor.loginWithPassword(email, password);
 
-        Router.go('/');
+        setTimeout(function() {
+          location.reload();
+        }, 500);
+
     }
 });

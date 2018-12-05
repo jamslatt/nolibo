@@ -84,6 +84,9 @@ primaryDBmap = new SimpleSchema({
   totalOut: {
     type: Number,
     optional: true
+  },
+  company: {
+    type: String
   }
 });
 
