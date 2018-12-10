@@ -43,7 +43,7 @@ TelegramBot.addListener('/in', function(command, username) {
 
 TelegramBot.addListener('/list', function(command) {
   var arr = primaryDB.find({sdoDate: moment().format("YYYYMMDD"), signIn: null}).map(function (doc) {
-    return doc.firstName + "/" + doc.secondName + ": " + doc.signOut + "\n";
+    return doc.firstName.substring(0, indexOf(" ")) + "/" + doc.secondName.substring(0, indexOf(" ")) + ": " + doc.signOut.substring(0, indexOf(" ")) + "\n";
   });
 
   arr.toString();
