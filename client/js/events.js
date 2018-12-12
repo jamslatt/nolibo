@@ -1,18 +1,6 @@
 Meteor.subscribe('primaryDB');
 
 Template.base.events({
-  'click .download': function(event) {
-    var nameFile = 'LibertyLog.csv';
-    var date = window.prompt('Enter the date for the records you want to download.', moment().format("YYYYMMDD"))
-    Meteor.call('download', date, function(err, fileContent) {
-      if (fileContent) {
-        var blob = new Blob([fileContent], {
-          type: "text/plain;charset=utf-8"
-        });
-        saveAs(blob, nameFile);
-      }
-    });
-  },
   'click .autopub': function(event) {
     Meteor.call('publishAll');
   },
@@ -132,8 +120,13 @@ Template.signOut.events({
         CAC: pCAC
       }).Phone;
     } else {
-      //alert("Try scanning the first CAC card again. (Read Error/No Intake Record Found)")
-      pOne = window.prompt("Enter a phone number..");
+      pOne = window.prompt(pCAC.substring(35, 50).trim() + " enter a phone number..");
+      if (!(phoneDB.findOne({ CAC: pCAC}))) {
+        phoneDB.insert({
+          CAC: pCAC,
+          Phone: pOne
+        })
+      }
     }
 
     if (phoneDB.findOne({
@@ -143,24 +136,30 @@ Template.signOut.events({
         CAC: sCAC
       }).Phone;
     } else {
-      //alert("Try scanning the second CAC card again. (Read Error/No Intake Record Found)")
-      pTwo = "";
-
+      pTwo = window.prompt(sCAC.substring(35, 50).trim() + " enter a phone number..");
+      if (!(phoneDB.findOne({ CAC: sCAC}))) {
+        phoneDB.insert({
+          CAC: sCAC,
+          Phone: pTwo
+        })
+      }
     }
 
+    // Prevent Doubble Sign Out
     if (primaryDB.find({ primaryCAC: pCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null }).count() > 0) {
-      alert("You already have signed out. Sign back in!");
+      alert(pCAC.substring(35, 50).trim() + " already have signed out. Sign back in!");
       return;
     }
     else if (primaryDB.find({ secondaryCAC: sCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null }).count() > 0) {
-      alert("You already have signed out. Sign back in!");
+      alert(sCAC.substring(35, 50).trim() + "You already have signed out. Sign back in!");
       return;
     }
     else if (primaryDB.find({ thirdCAC: tCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null }).count() > 0) {
-      alert("You already have signed out. Sign back in!");
+      alert(tCAC.substring(35, 50).trim() + "You already have signed out. Sign back in!");
       return;
     }
 
+    // Insert record into DB
     if (goodToGo) {
       primaryDB.insert({
         primaryCAC: pCAC,
