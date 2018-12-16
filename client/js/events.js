@@ -10,11 +10,8 @@ Template.base.events({
     Router.go('/search/' + marSearchSubmit);
   },
   'click .logout': function() {
-    let x = confirm("Are you sure you want to Disconnect from server? NoLibo will not function.");
-    if (x)
-      Meteor.logout();
-    else
-      alert("Canceled Disconnect.")
+    Meteor.logout();
+
 
 
   }
@@ -29,14 +26,14 @@ Template.purge.events({
 
     Meteor.call('purge', pCAC, (error, result) => {
       if (error) {
-        alert(error);
+        bootbox.alert(error);
       }
 
     });
 
 
 
-    alert("Removed all records for " + pCAC.substring(35, 55));
+    bootbox.alert("Removed all records for " + pCAC.substring(35, 55));
 
     $('[name="purgeCAC"]').val(null);
 
@@ -44,11 +41,6 @@ Template.purge.events({
 })
 
 Template.signOut.events({
-  'click .pChange': function(event) {
-    let cac = window.prompt("Scan your CAC",null);
-    //let oldPhone = phoneDB.findOne({CAC: cac}).Phone;
-    let phone = window.prompt("Enter the new phone number...", )
-  },
   'click .signIn': function(event) {
     event.preventDefault();
 
@@ -70,26 +62,24 @@ Template.signOut.events({
     let tCAC = $('[name="thirdCAC"]').val();
     let out = 2;
 
-    let epdid_one = $('[name="primaryCAC"]').val().substring(8,15);
+    let epdid_one = $('[name="primaryCAC"]').val().substring(8, 15);
     epdid_one = parseInt(epdid_one, 32);
 
-    let epdid_two = $('[name="secondaryCAC"]').val().substring(8,15);
+    let epdid_two = $('[name="secondaryCAC"]').val().substring(8, 15);
     epdid_two = parseInt(epdid_two, 32);
 
     // If too short
     if (pCAC.length < 89) {
       pCAC = " " + pCAC;
-    }
-    else if (sCAC.length < 89) {
+    } else if (sCAC.length < 89) {
       sCAC = " " + sCAC;
-    }
-    else if (tCAC.length < 89) {
+    } else if (tCAC.length < 89) {
       tCAC = " " + tCAC;
     }
 
 
     if (pCAC == sCAC) {
-      alert("You cannot sign out with yourself.");
+      bootbox.alert("You cannot sign out with yourself.");
       return;
     }
 
@@ -106,13 +96,13 @@ Template.signOut.events({
         CAC: tCAC
       }).Phone;
       out++;
-      epdid_three = $('[name="thirdCAC"]').val().substring(8,15);
+      epdid_three = $('[name="thirdCAC"]').val().substring(8, 15);
       epdid_three = parseInt(epdid_three, 32);
-    }
-    else {
+    } else {
       pThree = "";
     }
 
+    // Fetch first phone number
     if (phoneDB.findOne({
         CAC: pCAC
       })) {
@@ -120,42 +110,68 @@ Template.signOut.events({
         CAC: pCAC
       }).Phone;
     } else {
-      pOne = window.prompt(pCAC.substring(35, 50).trim() + " enter a phone number..");
-      if (!(phoneDB.findOne({ CAC: pCAC}))) {
-        phoneDB.insert({
-          CAC: pCAC,
-          Phone: pOne
-        })
-      }
+      bootbox.prompt({
+          title: pCAC.substring(35, 50) + " enter your phone number:",
+          callback: function (result) {
+            pOne = result;
+
+            if (!(phoneDB.findOne({CAC: pCAC}))) {
+              phoneDB.insert({
+                CAC: pCAC,
+                Phone: pOne
+              })
+            }
+            return;
+          }
+      });
     }
 
-    if (phoneDB.findOne({
-        CAC: sCAC
-      })) {
-      pTwo = phoneDB.findOne({
-        CAC: sCAC
-      }).Phone;
-    } else {
-      pTwo = window.prompt(sCAC.substring(35, 50).trim() + " enter a phone number..");
-      if (!(phoneDB.findOne({ CAC: sCAC}))) {
-        phoneDB.insert({
-          CAC: sCAC,
-          Phone: pTwo
-        })
+    // Fetch second phone number
+      if (phoneDB.findOne({
+          CAC: sCAC
+        })) {
+        pTwo = phoneDB.findOne({
+          CAC: sCAC
+        }).Phone;
+      } else {
+        bootbox.prompt({
+            title: sCAC.substring(35, 50) + " enter your phone number:",
+            callback: function (result) {
+              pTwo = result;
+
+              if (!(phoneDB.findOne({CAC: sCAC}))) {
+                phoneDB.insert({
+                  CAC: sCAC,
+                  Phone: pTwo
+                })
+              }
+              return;
+            }
+        });
       }
-    }
+
 
     // Prevent Doubble Sign Out
-    if (primaryDB.find({ primaryCAC: pCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null }).count() > 0) {
-      alert(pCAC.substring(35, 50).trim() + " already have signed out. Sign back in!");
+    if (primaryDB.find({
+        primaryCAC: pCAC,
+        sdoDate: moment().format("YYYYMMDD"),
+        signIn: null
+      }).count() > 0) {
+      bootbox.alert(pCAC.substring(35, 50).trim() + " already have signed out. Sign back in!");
       return;
-    }
-    else if (primaryDB.find({ secondaryCAC: sCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null }).count() > 0) {
-      alert(sCAC.substring(35, 50).trim() + "You already have signed out. Sign back in!");
+    } else if (primaryDB.find({
+        secondaryCAC: sCAC,
+        sdoDate: moment().format("YYYYMMDD"),
+        signIn: null
+      }).count() > 0) {
+      bootbox.alert(sCAC.substring(35, 50).trim() + "You already have signed out. Sign back in!");
       return;
-    }
-    else if (primaryDB.find({ thirdCAC: tCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null }).count() > 0) {
-      alert(tCAC.substring(35, 50).trim() + "You already have signed out. Sign back in!");
+    } else if (primaryDB.find({
+        thirdCAC: tCAC,
+        sdoDate: moment().format("YYYYMMDD"),
+        signIn: null
+      }).count() > 0) {
+      bootbox.alert(tCAC.substring(35, 50).trim() + "You already have signed out. Sign back in!");
       return;
     }
 
@@ -165,9 +181,9 @@ Template.signOut.events({
         primaryCAC: pCAC,
         secondaryCAC: sCAC,
         thirdCAC: tCAC,
-        firstName: pCAC.substring(35, 50) + pCAC.substring(15,16),
-        secondName: sCAC.substring(35, 50) + sCAC.substring(15,16),
-        thirdName: tCAC.substring(35, 50) + tCAC.substring(15,16),
+        firstName: pCAC.substring(35, 50) + pCAC.substring(15, 16),
+        secondName: sCAC.substring(35, 50) + sCAC.substring(15, 16),
+        thirdName: tCAC.substring(35, 50) + tCAC.substring(15, 16),
         destination: dest,
         epdid_one: epdid_one,
         epdid_two: epdid_two,
@@ -182,10 +198,9 @@ Template.signOut.events({
         company: cmpny
       }, function(error, result) {
         if (error) {
-          alert(error);
-        }
-        else {
-          alert("Successfully signed out!");
+          console.log(error);
+        } else {
+          bootbox.alert("Successfully signed out!");
         }
       });
     }
@@ -211,34 +226,33 @@ Template.byname.events({
 
     if (this.primaryCAC.toUpperCase() != pCAC.toUpperCase()) {
       allPresent = false;
-      alert("Try rescanning the first CAC.");
+      bootbox.alert("Try rescanning the first CAC.");
       return;
     }
     if (this.secondaryCAC.toUpperCase() != sCAC.toUpperCase()) {
       allPresent = false;
-      alert("Try rescanning the second CAC.");
+      bootbox.alert("Try rescanning the second CAC.");
       return;
     }
 
-/*    if (this.thirdCAC) {
-      if (this.thirdCAC.toUpperCase() != tCAC.toUpperCase()) {
-        allPresent = false;
-        alert("Try rescanning the third CAC.");
-      }
-    }
-*/
+    /*    if (this.thirdCAC) {
+          if (this.thirdCAC.toUpperCase() != tCAC.toUpperCase()) {
+            allPresent = false;
+            alert("Try rescanning the third CAC.");
+          }
+        }
+    */
 
     if (allPresent) {
       primaryDB.update(this._id, {
         $set: {
           signIn: moment().format("H:mm  YYYYMMDD")
         }
-      }, function(error, result){
+      }, function(error, result) {
         if (error) {
-          alert(error);
-        }
-        else {
-          alert("Successfully signed back in.")
+          bootbox.alert(error);
+        } else {
+          bootbox.alert("Successfully signed back in.")
         }
       });
 
@@ -252,7 +266,19 @@ Template.byname.events({
 
 
 Template.manual.events({
-  'click .signOut' : function() {
+  'click .signOut': function() {
+    let co = Meteor.user().emails[0].address;
+    console.log(co);
+    let cmpny = " ";
+
+    if (co.includes("bravo")) {
+      cmpny = "bravo";
+    }
+    if (co.includes("alpha")) {
+      cmpny = "alpha";
+    }
+
+
     primaryDB.insert({
       primaryCAC: 'Manual Entry',
       secondaryCAC: 'Manual Entry',
@@ -270,7 +296,8 @@ Template.manual.events({
       phoneTwo: $('[name="sPhone"]').val(),
       phoneThree: $('[name="tPhone"]').val(),
       logDate: new Date(),
-      totalOut: window.prompt("How many are leaving? 2 or 3?", 2)
+      totalOut: 2,
+      company: cmpny
     })
     Router.go('/');
   }
@@ -280,16 +307,23 @@ Template.manual.events({
 
 Template.sdo.events({
   'click .changeLoc': function() {
-    let newLocation = "<del>" + this.destination + "</del><br/>" + window.prompt("Enter new location:", "");
+    bootbox.prompt({
+      title: "Enter new location:",
+      callback: function(result) {
+        let newLocation = "<del>" + this.destination + "</del><br/>" + result;
 
-    primaryDB.update(this._id, {
-      $set: {
-        destination: newLocation
+        if (newLocation = null) {
+          return;
+        }
+
+        primaryDB.update(this._id, {
+          $set: {
+            destination: newLocation
+          }
+        });
+        bootbox.alert("Location successfully changed!");
       }
-    });
-    alert("Location successfully changed!");
-
-
+    })
   },
   'click .manSign': function() {
     primaryDB.update(this._id, {
@@ -297,15 +331,20 @@ Template.sdo.events({
         signIn: moment().format("H:mm  YYYYMMDD")
       }
     });
-    alert("Signed in.")
+    bootbox.alert("Signed in.")
   },
   'click .remove': function() {
-    let x = window.confirm("Are you sure you want to delete this record?");
-    if (x)
-      primaryDB.remove(this._id);
+    primaryDB.remove(this._id);
+
+    bootbox.alert("Record Removed");
 
   }
+
 })
+
+
+
+
 
 
 Template.intake.events({
@@ -316,20 +355,14 @@ Template.intake.events({
     let iDOB = $('[name="DOB"]').val();
     let iPhone = $('[name="phone"]').val();
 
-    let insert = confirm("Insert data for " + iCAC.substring(35,55));
 
 
 
-    if (insert) {
       phoneDB.insert({
         CAC: iCAC,
         DOB: iDOB,
         Phone: iPhone
       });
-    }
-    else {
-      alert("Intake record canceled.")
-    }
 
 
     $('[name="intakeCAC"]').val(null);
@@ -344,5 +377,16 @@ Template.intake.events({
 Template.login.events({
   'click .logout': function() {
     Meteor.logout();
+  },
+  'click .sub': function(event){
+      event.preventDefault();
+      var email = $('[name=email]').val();
+      var password = $('[name=password]').val();
+      Meteor.loginWithPassword(email, password);
+
+      setTimeout(function() {
+        location.reload();
+      }, 1500);
+
   }
 })

@@ -5,7 +5,7 @@ Meteor.startup(() => {
   Roles.addUsersToRoles('6JuGLw3WcvrjS42XM', ['admin','super-admin'])
 
 Accounts.config({
-  forbidClientAccountCreation : true
+  //forbidClientAccountCreation : true
 });
 
 
