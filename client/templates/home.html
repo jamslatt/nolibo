@@ -192,11 +192,13 @@
               <input type="text" name="primaryCAC" class="form-control" id="primaryCAC" aria-describedby="pCAChelp" placeholder="Scan your CAC Card...">
               <small id="pCAChelp" class="form-text text-muted">Scan the barcode just below your picture on your Military ID (CAC).</small>
             </div>
+            {{#if secondName}}
             <div class="form-group">
               <label for="secondaryCAC">{{ secondName }} scan your CAC...</label>
               <input type="text" name="secondaryCAC" class="form-control" id="secondaryCAC" aria-describedby="sCAChelp" placeholder="Scan your CAC Card...">
               <small id="sCAChelp" class="form-text text-muted">Scan the barcode just below your picture on your Military ID (CAC).</small>
             </div>
+            {{/if}}
             {{#if thirdCAC}}
               <div class="form-group">
                 <label for="secondaryCAC">{{ thirdName }} scan your CAC...</label>
@@ -287,7 +289,7 @@
                     <tbody>
                       {{#each noSign}}
                         <tr>
-                          <td>{{firstName}} / {{secondName}}{{#if thirdName}} / {{thirdName}}{{/if}}</td>
+                          <td>{{firstName}} {{#if secondName}}/ {{secondName}}{{/if}}{{#if thirdName}} / {{thirdName}}{{/if}}</td>
                           <td><span class="changeLoc" style="cursor: pointer">{{#markdown}}{{destination}}{{/markdown}}</span></td>
                           <td>{{phoneOne}}<br />{{phoneTwo}}<br />{{phoneThree}}</td>
                           <td>{{signOut}}</td>
@@ -326,7 +328,7 @@
           <tbody>
             {{#each primaryDB}}
               <tr>
-                <td>{{firstName}} / {{secondName}}{{#if thirdName}} / {{thirdName}}{{/if}}</td>
+                <td>{{firstName}} {{#if secondName}}/ {{secondName}}{{/if}}{{#if thirdName}} / {{thirdName}}{{/if}}</td>
                 <td><span class="changeLoc" style="cursor: pointer">{{#markdown}}{{destination}}{{/markdown}}</span></td>
                 <td>{{phoneOne}}<br />{{phoneTwo}}<br />{{phoneThree}}</td>
                 <td>{{signOut}}</td>
@@ -392,7 +394,7 @@
           <tbody>
             {{#each primaryDB}}
               <tr>
-                <td>{{firstName}} / {{secondName}}{{#if thirdName}} / {{thirdName}}{{/if}}</td>
+                <td>{{firstName}} {{#if secondName}}/ {{secondName}}{{/if}}{{#if thirdName}} / {{thirdName}}{{/if}}</td>
                 <td>{{#markdown}}{{destination}}{{/markdown}}</td>
                 <td>{{signOut}}</td>
                 <td>{{#if signIn}}{{signIn}}{{else}}

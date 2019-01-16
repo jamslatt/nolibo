@@ -28,6 +28,7 @@ primaryDBmap = new SimpleSchema({
   },
   secondaryCAC: {
     type: String,
+    optional: true
   },
   thirdCAC: {
     type: String,
@@ -38,6 +39,7 @@ primaryDBmap = new SimpleSchema({
   },
   secondName: {
     type: String,
+    optional: true
   },
   thirdName: {
     type: String,
@@ -51,6 +53,7 @@ primaryDBmap = new SimpleSchema({
   },
   epdid_two: {
     type: String,
+    optional: true
   },
   epdid_three: {
     type: String,

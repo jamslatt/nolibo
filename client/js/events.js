@@ -91,24 +91,14 @@ Template.signOut.events({
     epdid_three = parseInt(epdid_two, 32);
 
     // If too short
-    if (pCAC.length < 89 && pCAC.length > 80) {
+    if (pCAC.length < 89) {
       pCAC = " " + pCAC;
     }
-    else {
-      bootbox.alert("Ensure you scan the front barcode, not the back.");
-      return;
-    }
-    if (sCAC.length < 89 && pCAC.length > 80) {
+    if (sCAC.length < 89) {
       sCAC = " " + sCAC;
     }
-    else {
-      bootbox.alert("Ensure you scan the front barcode, not the back.");
-      return;
-    }
-    if (tCAC.length < 89 && pCAC.length > 80) {
-      tCAC = " " + tCAC;
-    }
-    else {
+    // Backwards scan prevention
+    if (pCAC.length < 80 || sCAC.length < 80) {
       bootbox.alert("Ensure you scan the front barcode, not the back.");
       return;
     }
@@ -249,7 +239,9 @@ Template.byname.events({
   'click .signIn': function(doc) {
 
     let pCAC = $('[name="primaryCAC"]').val().trim();
-    let sCAC = $('[name="secondaryCAC"]').val().trim();
+    if (this.secondaryCAC) {
+      let sCAC = $('[name="secondaryCAC"]').val().trim();
+    }
 
 
 
@@ -260,10 +252,12 @@ Template.byname.events({
       bootbox.alert("Try rescanning the first CAC.");
       return;
     }
-    if (this.secondaryCAC.toUpperCase() != sCAC.toUpperCase()) {
-      allPresent = false;
-      bootbox.alert("Try rescanning the second CAC.");
-      return;
+    if (this.secondaryCAC) {
+      if (this.secondaryCAC.toUpperCase() != $('[name="secondaryCAC"]').val().trim().toUpperCase()) {
+        allPresent = false;
+        bootbox.alert("Try rescanning the second CAC.");
+        return;
+      }
     }
 
     /*    if (this.thirdCAC) {
@@ -338,16 +332,18 @@ Template.manual.events({
 
 Template.sdo.events({
   'click .changeLoc': function() {
+    let oldLoc = this.destination;
+    let id = this._id;
     bootbox.prompt({
       title: "Enter new location:",
       callback: function(result) {
-        let newLocation = "<del>" + this.destination + "</del><br/>" + result;
+      let newLocation = "<del>" + oldLoc + "</del><br/>" + result;
 
-        if (newLocation = null) {
+      /*  if (newLocation = null) {
           return;
-        }
+        }*/
 
-        primaryDB.update(this._id, {
+        primaryDB.update(id, {
           $set: {
             destination: newLocation
           }
@@ -443,15 +439,9 @@ Template.yourself.events({
 
     primaryDB.insert({
       primaryCAC: $('[name="primaryCAC"]').val(),
-      secondaryCAC: 'All by yourself',
-      thirdCAC: 'All by yourself',
       firstName: pCAC.substring(35, 50) + pCAC.substring(15, 16),
-      secondName: 'No Buddy',
-      thirdName: null,
       destination: dest,
       epdid_one: epdid_one,
-      epdid_two: "Single Entry",
-      epdid_three: "Single Entry",
       signOut: moment().format("H:mm  YYYYMMDD"),
       sdoDate: moment().format("YYYYMMDD"),
       phoneOne: pOne,
