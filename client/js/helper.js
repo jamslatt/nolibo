@@ -32,7 +32,7 @@ Template.marDetail.helpers({
   record: function () {
     let name = Iron.Location.get().path.substring(8,30);
 
-    return primaryDB.find({ $or: [ { firstName: name }, { secondName: name } , { thirdName: name}]});
+    return primaryDB.find({ $or: [ { epdid_one: name }, { epdid_two: name } , { epdid_three: name}]});
   }
 })
 

@@ -1,0 +1,69 @@
+<template name="yourself">
+
+  <div class="container" style="margin-top: 5vh">
+    <div class="row">
+      <div class="col-md-12 ">
+        <div class="jumbotron">
+          <h1 class="display-4">Sign Out Alone</h1>
+          <a href="/" title="Home" class="btn btn-outline-primary">Home</a>
+          <a href="/in" title="Sign In" class="btn btn-outline-primary">Sign In <i class="fas fa-sign-in-alt"></i></a>
+          <!--<br/><br/>
+          <span class="text-warning pChange">Need to change your phone number? Clik me.</span>-->
+          <hr class="my-4">
+          <div class="form-group">
+            <label for="primaryCAC">Scan CAC Card (Scan front barcode)</label>
+            <input type="text" name="primaryCAC" class="form-control" id="primaryCAC" aria-describedby="pCAChelp" placeholder="Scan your CAC Card...">
+            <small id="pCAChelp" class="form-text text-muted">Scan the barcode just below your picture on your Military ID (CAC).</small>
+          </div>
+        <div class="form-group">
+            <label for="secondaryCAC">Select your destination</label>            <small id="loc" class="form-text text-muted">Scan or select the location you are traveling to.</small>
+
+            <br/>
+            <button type="button" class="btn btn-outline-primary" id="a" data-toggle="button" aria-pressed="false" autocomplete="off">
+              Small Px
+            </button>
+            <button type="button" class="btn btn-outline-primary" id="c" data-toggle="button" aria-pressed="false" autocomplete="off">
+              McLaughlin Gym
+            </button>
+            <button type="button" class="btn btn-outline-primary"  id="d" data-toggle="button" aria-pressed="false" autocomplete="off">
+              Religious Service
+            </button>
+        </div>
+
+          <br />
+          <span class="btn btn-lg signOut btn-primary">Sign Out&nbsp;<i class="fas fa-sign-out-alt"></i></span>
+
+        </div>
+      </div>
+    </div>
+    <script>
+      $('#primaryCAC').focus();
+      /*$(":input").keypress(function(event){
+    if (event.which == '10' || event.which == '13') {
+        event.preventDefault();
+    }
+    });*/
+    jQuery.extend(jQuery.expr[':'], {
+    focusable: function (el, index, selector) {
+        return $(el).is('a, button, :input, [tabindex]');
+    }
+    });
+
+    $(document).on('keypress', 'input,select', function (e) {
+
+    if (e.which == 13) {
+        e.preventDefault();
+        // Get all focusable elements on the page
+        var $canfocus = $(':focusable');
+        var index = $canfocus.index(document.activeElement) + 1;
+        if (index >= $canfocus.length) index = 0;
+        $canfocus.eq(index).delay(1000).focus();
+    }
+    });
+
+
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+  </div>
+</template>

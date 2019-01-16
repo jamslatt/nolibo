@@ -8,6 +8,9 @@
           <p class="subtitle">The next generation in liberty logs.</p>
           <hr class="my-4">
           <div class="row">
+            <div class="col-md-12" style="margin-bottom: 10px;">
+              <a href="/out/single" style="width: 100%" class="btn btn-lg btn-outline-success">Sign Out By Yourself&nbsp;<i class="fas fa-sign-out-alt"></i></a>
+            </div>
             <div class="col-md-6">
               <a href="" onclick="window.location.replace('/out')" style="width: 100%;height: 175px;" class="btn btn-lg btn-primary"><br /><i class="fas fa-sign-out-alt"></i><br />Sign Out<br /><i>leaving barracks</i></a>
             </div>
@@ -111,9 +114,30 @@
 
         <div class="form-group">
             <label for="secondaryCAC">Destination (Scan or Type)</label>
-            <input type="text" name="destination" class="form-control" id="location" aria-describedby="loc" placeholder="Scan your destination...">
-            <small id="loc" class="form-text text-muted">Scan the barcode that matches the location you are traveling to.</small>
-          </div>
+            <input type="text" name="destination" class="form-control" id="location" aria-describedby="loc" placeholder="Enter your destination...">
+            <small id="loc" class="form-text text-muted">Scan or select the location you are traveling to.</small>
+
+            <br/>
+            <button type="button" class="btn btn-outline-primary" id="a" data-toggle="button" aria-pressed="false" autocomplete="off">
+              Small Px
+            </button>
+            <button type="button" class="btn btn-outline-primary" id="b" data-toggle="button" aria-pressed="false" autocomplete="off">
+              Big Px
+            </button>
+            <button type="button" class="btn btn-outline-primary" id="c" data-toggle="button" aria-pressed="false" autocomplete="off">
+              McLaughlin Gym
+            </button>
+            <button type="button" class="btn btn-outline-primary"  id="d" data-toggle="button" aria-pressed="false" autocomplete="off">
+              Commissary
+            </button>
+            <button type="button" class="btn btn-outline-primary"  id="e" data-toggle="button" aria-pressed="false" autocomplete="off">
+              Performance Strength Center
+            </button>
+            <button type="button" class="btn  btn-outline-primary" id="f" data-toggle="button" aria-pressed="false" autocomplete="off">
+              Bowling Alley
+            </button>
+
+        </div>
 
           <br />
           <span class="btn btn-lg signIn btn-primary">Sign Out&nbsp;<i class="fas fa-sign-out-alt"></i></span>
@@ -362,6 +386,7 @@
               <th scope="col">Location</th>
               <th scope="col">Time Out</th>
               <th scope="col">Time In</th>
+              <th scope="col">Admin Tools</th>
             </tr>
           </thead>
           <tbody>
@@ -373,6 +398,7 @@
                 <td>{{#if signIn}}{{signIn}}{{else}}
                     <div class="alert alert-danger" role="alert">FAILED TO SIGN IN</div>
                   {{/if}}</td>
+                  <td><a href="" class="text-success manSign">Sign In</a></td>
               </tr>
             {{/each}}
           </tbody>
