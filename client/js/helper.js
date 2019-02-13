@@ -11,6 +11,12 @@ Template.sdo.helpers({
 
 });
 
+Template.keysOut.helpers({
+  keysOut: ()=> {
+    return phoneDB.find({});
+  }
+})
+
 Template.print.helpers({
   primaryDB: ()=> {
       let date = Iron.Location.get().path.substring(7,16);

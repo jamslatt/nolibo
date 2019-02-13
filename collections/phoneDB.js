@@ -26,9 +26,18 @@ phoneDBmap = new SimpleSchema({
   CAC: {
     type: String
   },
+  Name : {
+    type: String
+  },
+  edipi: {
+    type: Number
+  },
   DOB: {
     type: String,
     optional: true
+  },
+  RoomKeySerial: {
+    type: Number,
   },
   Phone: {
     type: String

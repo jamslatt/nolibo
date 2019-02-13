@@ -464,12 +464,28 @@ Template.intake.events({
     let iCAC = $('[name="intakeCAC"]').val();
     let iDOB = $('[name="DOB"]').val();
     let iPhone = $('[name="phone"]').val();
+    let serial = $('[name="roomKey"]').val();
 
+    // If too short
+    if (iCAC.length < 89) {
+      iCAC = " " + iCAC;
+    }
+    // Backwards scan prevention
+    if (iCAC.length < 80) {
+      bootbox.alert("Ensure you scan the front barcode, not the back.");
+      return;
+    }
+
+    let epdid_one = iCAC.substring(8, 15);
+    epdid_one = parseInt(epdid_one, 32);
 
 
       phoneDB.insert({
         CAC: iCAC,
+        Name: iCAC.substring(35, 50) + iCAC.substring(15, 16),
+        edipi: epdid_one,
         DOB: iDOB,
+        RoomKeySerial: serial,
         Phone: iPhone
       });
 
@@ -477,10 +493,52 @@ Template.intake.events({
     $('[name="intakeCAC"]').val(null);
     $('[name="DOB"]').val(null);
     $('[name="phone"]').val(null);
+    $('[name="roomKey"]').val(null);
 
 
   }
 
+})
+
+Template.studentCheckout.events({
+  'click .checkout': function() {
+    phoneDB.remove(this._id);
+    Router.go('/student/manage');
+  }
+})
+
+Template.studentManager.events({
+  'click .keyChange': function() {
+    let id = parseInt($('[name="edipi"]').val());
+    let n_serial = parseInt($('[name="serial"]').val());
+    let actualID = phoneDB.findOne({ edipi: id})._id;
+
+    phoneDB.update(actualID, {
+      $set: {
+        RoomKeySerial: n_serial
+      }
+    });
+
+  }
+})
+
+Template.bulkCheckout.events({
+  'click .next': function() {
+    let raw = $('#edipiList').val().split('\n');
+    let names = "";
+
+    for(var i = 0;i < raw.length;i++){
+        //checkoiur raw[i]
+        let g = parseInt(raw[i]);
+        names += "\n" + phoneDB.findOne({edipi: g}).Name;
+        phoneDB.remove(phoneDB.findOne({edipi: g})._id);
+
+
+    }
+    //confirm
+    $('.alert').append(names);
+
+  }
 })
 
 Template.login.events({
