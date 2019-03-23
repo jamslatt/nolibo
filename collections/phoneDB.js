@@ -41,7 +41,7 @@ phoneDBmap = new SimpleSchema({
   },
   classNumber: {
     type: String,
-    defaultValue: "MAT"
+    defaultValue: "Newjoin"
   },
   Phone: {
     type: String
