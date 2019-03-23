@@ -1,11 +1,11 @@
 import SimpleSchema from 'simpl-schema';
 
 //Create Collection
-phoneDB = new Mongo.Collection('phoneDB');
+classDB = new Mongo.Collection('classDB');
 
 
 // Collection permissoins
-phoneDB.allow({
+classDB.allow({
   insert: function(userId, doc) {
     return true;
   },
@@ -22,30 +22,26 @@ phoneDB.allow({
 });
 
 //DB SimpleSchema
-phoneDBmap = new SimpleSchema({
-  CAC: {
-    type: String
-  },
-  Name : {
-    type: String
-  },
-  edipi: {
-    type: Number
-  },
-  DOB: {
-    type: String,
-    optional: true
-  },
-  RoomKeySerial: {
-    type: Number,
-  },
+classDBmap = new SimpleSchema({
   classNumber: {
-    type: String,
-    defaultValue: "MAT"
-  },
-  Phone: {
     type: String
+  },
+  company: {
+    type: String
+  },
+  mos: {
+    type: String
+  },
+  facultyAdvisor: {
+    type: String
+  },
+  gradDate: {
+    type: String
+  },
+  createDate: {
+    type: String,
+    defaultValue: moment().format("YYYYMMDD")
   }
 });
 
-phoneDB.attachSchema(phoneDBmap)
+classDB.attachSchema(classDBmap)

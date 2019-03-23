@@ -227,9 +227,15 @@
         <div class="row">
           <div class="col-md-6">
             <a href="/" title="Home" class="btn btn-outline-primary">Home</a>
+            <a href="" title="Print" onclick="print()" class="btn btn-outline-primary">Print</a>
+            <script>
+              function print() {
+                window.open('/print/' + moment().format("YYYYMMDD"));
+              }
+            </script>
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#noSign">
-              View all who have failed to signed in.
+              View all who are still signed out.
             </button>
           </div>
           <div class="col-md-6">
@@ -294,7 +300,7 @@
                           <td>{{phoneOne}}<br />{{phoneTwo}}<br />{{phoneThree}}</td>
                           <td>{{signOut}}</td>
                           <td>{{#if signIn}}{{signIn}}{{else}}
-                              <div class="alert alert-danger" role="alert">FAILED TO SIGN IN</div>
+                              <div class="alert alert-warning" role="alert">Still signed out.</div>
                             {{/if}}</td>
                         </tr>
                         {{else}}
@@ -333,7 +339,7 @@
                 <td>{{phoneOne}}<br />{{phoneTwo}}<br />{{phoneThree}}</td>
                 <td>{{signOut}}</td>
                 <td>{{#if signIn}}{{signIn}}{{else}}
-                    <div class="alert alert-danger " role="alert">FAILED TO SIGN IN</div>
+                    <div class="alert alert-warning " role="alert">Still signed out.</div>
                   {{/if}}</td>
                   <td><a href="" class="text-success manSign">Sign In</a><br/><a href="" class="text-danger remove">Remove Record</a></td>
 

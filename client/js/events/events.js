@@ -1,13 +1,10 @@
 Meteor.subscribe('primaryDB');
 
 Template.base.events({
-  'click .autopub': function(event) {
-    Meteor.call('publishAll');
-  },
   'click .marSearchSubmit': function() {
     event.preventDefault();
     let marSearchSubmit = $('[name="marSearch"]').val();
-    Router.go('/search/' + marSearchSubmit);
+    Router.go('/view/' + marSearchSubmit);
   },
   'click .logout': function() {
     Meteor.logout();
@@ -15,48 +12,8 @@ Template.base.events({
   }
 })
 
-Template.phoneChange.events({
-  'click .phoneChange': function() {
-    let user = $('[name="telCAC"]').val();
-    let newPhone = $('[name="newphone"]').val();
-
-    user = phoneDB.findOne({ CAC: user })._id;
-console.log(user + newPhone);
-    phoneDB.update(user, {
-      $set: {
-        Phone: newPhone
-      }
-    }, function(error, result) {
-      if (error) {
-        bootbox.alert(error);
-      } else {
-        bootbox.alert("Successfully changed phone number.")
-      }
-    });
-  }
-})
-
-Template.purge.events({
-  'click .purge': function() {
-    let pCAC = $('[name="purgeCAC"]').val();
-
-    //  Meteor.call('purge', pCAC);
-
-    Meteor.call('purge', pCAC, (error, result) => {
-      if (error) {
-        bootbox.alert(error);
-      }
-
-    });
 
 
-
-    bootbox.alert("Removed all records for " + pCAC.substring(35, 55));
-
-    $('[name="purgeCAC"]').val(null);
-
-  }
-})
 
 Template.signOut.events({
   'click .signIn': function(event) {
@@ -369,6 +326,10 @@ Template.sdo.events({
 
 })
 
+
+
+
+
 Template.sdoHistory.events({
   'click .manSign': function() {
     primaryDB.update(this._id, {
@@ -489,6 +450,8 @@ Template.intake.events({
         Phone: iPhone
       });
 
+      $('.result').append(iCAC.substring(35, 50) + "Registered /")
+
 
     $('[name="intakeCAC"]').val(null);
     $('[name="DOB"]').val(null);
@@ -500,46 +463,8 @@ Template.intake.events({
 
 })
 
-Template.studentCheckout.events({
-  'click .checkout': function() {
-    phoneDB.remove(this._id);
-    Router.go('/student/manage');
-  }
-})
-
-Template.studentManager.events({
-  'click .keyChange': function() {
-    let id = parseInt($('[name="edipi"]').val());
-    let n_serial = parseInt($('[name="serial"]').val());
-    let actualID = phoneDB.findOne({ edipi: id})._id;
-
-    phoneDB.update(actualID, {
-      $set: {
-        RoomKeySerial: n_serial
-      }
-    });
-
-  }
-})
-
-Template.bulkCheckout.events({
-  'click .next': function() {
-    let raw = $('#edipiList').val().split('\n');
-    let names = "";
-
-    for(var i = 0;i < raw.length;i++){
-        //checkoiur raw[i]
-        let g = parseInt(raw[i]);
-        names += "\n" + phoneDB.findOne({edipi: g}).Name;
-        phoneDB.remove(phoneDB.findOne({edipi: g})._id);
 
 
-    }
-    //confirm
-    $('.alert').append(names);
-
-  }
-})
 
 Template.login.events({
   'click .logout': function() {
