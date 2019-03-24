@@ -32,9 +32,9 @@ Template.signOut.events({
       cmpny = "alpha";
     }
 
-    let pCAC = $('[name="primaryCAC"]').val();
-    let sCAC = $('[name="secondaryCAC"]').val();
-    let tCAC = $('[name="thirdCAC"]').val();
+    let pCAC = $('[name="primaryCAC"]').val().trim();
+    let sCAC = $('[name="secondaryCAC"]').val().trim();
+    let tCAC = $('[name="thirdCAC"]').val().trim();
     let out = 2;
 
     let epdid_one = $('[name="primaryCAC"]').val().substring(8, 15);
@@ -47,13 +47,7 @@ Template.signOut.events({
     epdid_three = $('[name="thirdCAC"]').val().substring(8, 15);
     epdid_three = parseInt(epdid_two, 32);
 
-    // If too short
-    if (pCAC.length < 89) {
-      pCAC = " " + pCAC;
-    }
-    if (sCAC.length < 89) {
-      sCAC = " " + sCAC;
-    }
+
     // Backwards scan prevention
     if (pCAC.length < 80 || sCAC.length < 80) {
       bootbox.alert("Ensure you scan the front barcode, not the back.");
@@ -128,28 +122,15 @@ Template.signOut.events({
         bootbox.alert("Error: No phone number found. Please register as new user.");
       }
 
-
     // Prevent Doubble Sign Out
-    if (primaryDB.find({
-        primaryCAC: pCAC,
-        sdoDate: moment().format("YYYYMMDD"),
-        signIn: null
-      }).count() > 0) {
-      bootbox.alert(pCAC.substring(35, 50).trim() + " already have signed out. Sign back in!");
+    if (primaryDB.find({ $or: [ { primaryCAC: pCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null }, { secondaryCAC: pCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null } , { thirdCAC: pCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null}]}).count() > 0) {
+        bootbox.alert(pCAC.substring(35, 50).trim() + " already have signed out. Sign back in!");
       return;
-    } else if (primaryDB.find({
-        secondaryCAC: sCAC,
-        sdoDate: moment().format("YYYYMMDD"),
-        signIn: null
-      }).count() > 0) {
+    } else if (primaryDB.find({ $or: [ { primaryCAC: sCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null }, { secondaryCAC: sCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null } , { thirdCAC: sCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null}]}).count() > 0) {
       bootbox.alert(sCAC.substring(35, 50).trim() + "You already have signed out. Sign back in!");
       return;
-    } else if (primaryDB.find({
-        thirdCAC: tCAC,
-        sdoDate: moment().format("YYYYMMDD"),
-        signIn: null
-      }).count() > 0) {
-      bootbox.alert(tCAC.substring(35, 50).trim() + "You already have signed out. Sign back in!");
+    } else if (primaryDB.find({ $or: [ { primaryCAC: tCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null }, { secondaryCAC: tCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null } , { thirdCAC: tCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null}]}).count() > 0) {
+        bootbox.alert(tCAC.substring(35, 50).trim() + "You already have signed out. Sign back in!");
       return;
     }
 
@@ -386,12 +367,8 @@ Template.yourself.events({
     let epdid_one = $('[name="primaryCAC"]').val().substring(8, 15);
     epdid_one = parseInt(epdid_one, 32);
 
-    if (primaryDB.find({
-        primaryCAC: pCAC,
-        sdoDate: moment().format("YYYYMMDD"),
-        signIn: null
-      }).count() > 0) {
-      bootbox.alert(pCAC.substring(35, 50).trim() + " already have signed out. Sign back in!");
+    if (primaryDB.find({ $or: [ { primaryCAC: pCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null }, { secondaryCAC: pCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null } , { thirdCAC: pCAC, sdoDate: moment().format("YYYYMMDD"), signIn: null}]}).count() > 0) {
+        bootbox.alert(pCAC.substring(35, 50).trim() + " already have signed out. Sign back in!");
       return;
     }
 
@@ -411,7 +388,14 @@ Template.yourself.events({
       logDate: new Date(),
       totalOut: 1,
       company: cmpny
-    })
+    }, function(error, result) {
+      if (error) {
+        console.log(error);
+      } else {
+        bootbox.alert("Successfully signed out!");
+      }
+    });
+
     Router.go('/');
   }
 })
@@ -422,14 +406,14 @@ Template.intake.events({
   'click .register': function() {
     event.preventDefault();
 
-    let iCAC = $('[name="intakeCAC"]').val();
+    let iCAC = $('[name="intakeCAC"]').val().trim();
     let iDOB = $('[name="DOB"]').val();
     let iPhone = $('[name="phone"]').val();
     let serial = $('[name="roomKey"]').val();
 
     // If too short
     if (iCAC.length < 89) {
-      iCAC = " " + iCAC;
+      iCAC =  iCAC + " ";
     }
     // Backwards scan prevention
     if (iCAC.length < 80) {

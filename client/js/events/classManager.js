@@ -85,6 +85,12 @@ Template .classManager.events({
     if (confirm == this.classNumber) {
       Meteor.call('archiveClass',this.classNumber);
     }
+  },
+  'click .checkout': function() {
+    let confirm = window.prompt("Enter the Students class number to confirm you want to DELETE this student from NoLibo.");
+    if (confirm == this.classNumber) {
+      phoneDB.remove(this._id);
+    }
   }
 })
 

@@ -295,7 +295,7 @@
                     <tbody>
                       {{#each noSign}}
                         <tr>
-                          <td>{{firstName}} {{#if secondName}}/ {{secondName}}{{/if}}{{#if thirdName}} / {{thirdName}}{{/if}}</td>
+                          <td><a href="/view/{{epdid_one}}" style="text-decoration: none;color:black;">{{firstName}}</a> {{#if secondName}}/ {{secondName}}{{/if}}{{#if thirdName}} / {{thirdName}}{{/if}}</td>
                           <td><span class="changeLoc" style="cursor: pointer">{{#markdown}}{{destination}}{{/markdown}}</span></td>
                           <td>{{phoneOne}}<br />{{phoneTwo}}<br />{{phoneThree}}</td>
                           <td>{{signOut}}</td>
@@ -334,7 +334,7 @@
           <tbody>
             {{#each primaryDB}}
               <tr>
-                <td>{{firstName}} {{#if secondName}}/ {{secondName}}{{/if}}{{#if thirdName}} / {{thirdName}}{{/if}}</td>
+                <td><a href="/view/{{epdid_one}}" style="text-decoration: none;color:black;">{{firstName}}</a> {{#if secondName}}/ <a href="/view/{{epdid_two}}" style="text-decoration: none;color:black;">{{secondName}}</a>{{/if}}{{#if thirdName}} / <a href="/view/{{epdid_three}}" style="text-decoration: none;color:black;">{{thirdName}}</a>{{/if}}</td>
                 <td><span class="changeLoc" style="cursor: pointer">{{#markdown}}{{destination}}{{/markdown}}</span></td>
                 <td>{{phoneOne}}<br />{{phoneTwo}}<br />{{phoneThree}}</td>
                 <td>{{signOut}}</td>
@@ -350,6 +350,8 @@
       </div>
     </div>
   </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
 </template>
 
 <template name="sdoHistory">
