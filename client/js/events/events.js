@@ -17,6 +17,9 @@ Template.base.events({
 
 Template.signOut.events({
   'click .signIn': function(event) {
+    require('bootstrap');
+    require('jquery');
+    require('bootbox');
     event.preventDefault();
 
     let goodToGo = true;
@@ -272,23 +275,18 @@ Template.sdo.events({
   'click .changeLoc': function() {
     let oldLoc = this.destination;
     let id = this._id;
-    bootbox.prompt({
-      title: "Enter new location:",
-      callback: function(result) {
-      let newLocation = "<del>" + oldLoc + "</del><br/>" + result;
+    let result = window.prompt("Enter new location:");
+    let newLocation = "<del>" + oldLoc + "</del><br/>" + result;
 
-      /*  if (newLocation = null) {
-          return;
-        }*/
+
 
         primaryDB.update(id, {
           $set: {
             destination: newLocation
           }
         });
-        bootbox.alert("Location successfully changed!");
-      }
-    })
+        alert("Location successfully changed!");
+
   },
   'click .manSign': function() {
     primaryDB.update(this._id, {
@@ -296,7 +294,7 @@ Template.sdo.events({
         signIn: moment().format("H:mm  YYYYMMDD")
       }
     });
-    bootbox.alert("Signed in.")
+    alert("Signed in.")
   },
   'click .remove': function() {
     primaryDB.remove(this._id);

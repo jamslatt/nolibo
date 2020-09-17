@@ -27,6 +27,10 @@ if (event.which == 13) {
 });
 })
 */
+require('bootstrap');
+require('jquery');
+require('bootbox');
+
 Template.signOut.onRendered(function() {
   $(document).on('keypress', function (e) {
 

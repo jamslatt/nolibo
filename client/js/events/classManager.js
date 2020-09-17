@@ -7,6 +7,9 @@ Template.newClass.events({
   'click .create': function() {
 
    // Define
+   require('bootstrap');
+   require('jquery');
+   require('bootbox');
 
     let number = $('[name="number"]').val();
     let school = $('[name="school"]').val();
