@@ -122,6 +122,7 @@ Template.marDetail.events({
     let uPhone = $('[name="Phone"]').val();
     let uRoomKeySerial = $('[name="RoomKeySerial"]').val();
     let uClassNumber = $('[name="classNumber"]').val();
+    let uNotes = $('#adminNotes').val();
 
     phoneDB.update(this._id,{
       $set: {
@@ -129,7 +130,8 @@ Template.marDetail.events({
         DOB: uDOB,
         Phone: uPhone,
         RoomKeySerial: uRoomKeySerial,
-        classNumber: uClassNumber
+        classNumber: uClassNumber,
+        Notes: uNotes
       }
     })
 

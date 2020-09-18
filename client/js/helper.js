@@ -23,7 +23,10 @@ Template.print.helpers({
 Template.home.helpers({
   loggedin: function () {
     return Meteor.userId()
-  }
+    },
+    noSign: () => {
+        return primaryDB.find({ sdoDate: moment().format("YYYYMMDD"), signIn: null });
+    }
 })
 
 Template.marDetail.helpers({

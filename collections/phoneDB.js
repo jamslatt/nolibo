@@ -45,7 +45,10 @@ phoneDBmap = new SimpleSchema({
   },
   Phone: {
     type: String
-  }
+    },
+   Notes: {
+    type: String
+   }
 });
 
 phoneDB.attachSchema(phoneDBmap)
