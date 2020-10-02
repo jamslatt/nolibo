@@ -5,16 +5,14 @@
     "start": "meteor run"
   },
   "dependencies": {
+    "@popperjs/core": "^2.5.3",
     "babel-runtime": "^6.26.0",
     "bootstrap": "^4.5.2",
     "jquery": "^3.5.1",
     "meteor-node-stubs": "~0.2.4",
     "moment": "^2.23.0",
-    "popper.js": "^1.16.1",
     "simpl-schema": "^0.3.2",
     "smalltalk": "^3.2.2"
   },
-  "devDependencies": {
-    "electrify": "^2.1.4"
-  }
+  "devDependencies": {}
 }
